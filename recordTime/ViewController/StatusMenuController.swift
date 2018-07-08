@@ -24,7 +24,7 @@ class StatusMenuController: NSViewController {
     @IBOutlet weak var recordView: RecorderView!
     @IBAction func startRecord(_ sender: Any) {
         print("hello swift, let us start!")
-        trackerModel.start()
+        trackerModel.initTiming(useSeconds: true)
     }
     @IBAction func exit(_ sender: Any) {
         NSApplication.shared.terminate(self)
@@ -44,6 +44,9 @@ class StatusMenuController: NSViewController {
         statusItem.title = "Start"
         statusItem.menu = statusMenu
         trackerModel.subscribe(onTimeUpdate: updateMenuTitle)
+    }
+    func refreshState() {
+        print("refresh state")
     }
     private func updateMenuTitle() {
         statusItem.title = trackerModel.getCurrentTime()

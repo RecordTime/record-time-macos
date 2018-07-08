@@ -32,27 +32,35 @@ class TrackerController: NSObject {
         return timer == nil && elapsedTime > 0
     }
     
-    func start() {
-        startTime = Date()
-        // 初始化定时器
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(callback), userInfo: nil, repeats: true)
-        callback()
+//    func start() {
+//        startTime = Date()
+//        // 初始化定时器
+//        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(callback), userInfo: nil, repeats: true)
+//        callback()
+//    }
+    func initTiming(useSeconds: Bool) {
+        tickInterval = (useSeconds) ? 1 : 60
+        let now = Date()
+        timer = Timer(fire: now, interval: tickInterval, repeats: true, block: onTick)
+    }
+    private func onTick(timer: Timer) {
+        self.onTimeUpdate?()
     }
     func stop() {
         timer?.invalidate()
         timer = nil
     }
     
-    @objc
-    dynamic func callback() {
-        // print("setInterval", Date())
-        // guard 类似于 if 吧？所以如果 startTime 以及存在，表示已经开始了一个定时器，直接退出
-        guard let startTime = startTime else { return }
-        
-        elapsedTime = -startTime.timeIntervalSinceNow
-        let secondsRemaining = (duration - elapsedTime).rounded()
-        self.onTimeUpdate!()
-    }
+//    @objc
+//    dynamic func callback() {
+//        // print("setInterval", Date())
+//        // guard 类似于 if 吧？所以如果 startTime 以及存在，表示已经开始了一个定时器，直接退出
+//        guard let startTime = startTime else { return }
+//
+//        elapsedTime = -startTime.timeIntervalSinceNow
+//        let secondsRemaining = (duration - elapsedTime).rounded()
+//        self.onTimeUpdate!()
+//    }
     /**
      * 将时间格式化
      */

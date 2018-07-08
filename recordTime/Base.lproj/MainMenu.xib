@@ -31,20 +31,29 @@
         </customObject>
         <customObject id="Hfz-ZN-Q92" customClass="StatusMenuController" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="statusMenu" destination="Ly6-M4-7kg" id="pCH-Xz-Bo3"/>
                 <outlet property="trackerModel" destination="s3M-JA-h5O" id="Wvx-tF-l9m"/>
             </connections>
         </customObject>
         <menu id="Ly6-M4-7kg">
             <items>
-                <menuItem title="开始计时" keyEquivalent="s" id="W7v-A4-pkM"/>
+                <menuItem title="开始计时" keyEquivalent="s" id="W7v-A4-pkM">
+                    <connections>
+                        <action selector="startRecord:" target="Hfz-ZN-Q92" id="Exh-YG-yBy"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="xeX-S6-dS5"/>
                 <menuItem title="content" id="J90-d2-dsq">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="CeR-7B-3Wt"/>
-                <menuItem title="退出" keyEquivalent="q" id="4qR-Zm-HCm"/>
+                <menuItem title="退出" keyEquivalent="q" id="4qR-Zm-HCm">
+                    <connections>
+                        <action selector="exit:" target="Hfz-ZN-Q92" id="A7v-ks-gIk"/>
+                    </connections>
+                </menuItem>
             </items>
-            <point key="canvasLocation" x="902" y="106"/>
+            <point key="canvasLocation" x="1142" y="111"/>
         </menu>
         <customView id="wa6-HV-2ZL" customClass="RecorderView" customModule="recordTime" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="497" height="243"/>
