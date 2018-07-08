@@ -24,8 +24,7 @@ class StatusMenuController: NSViewController {
     @IBOutlet weak var settingsWindow: NSWindow!
     @IBOutlet weak var recorderWindow: NSWindow!
     @IBAction func startRecord(_ sender: Any) {
-        print("hello swift, let us start!")
-        trackerModel.initTiming(useSeconds: true)
+        trackerModel.initTiming()
     }
     @IBAction func openSettings(_ sender: Any) {
         let settingsWindowController = NSWindowController.init(window: settingsWindow)

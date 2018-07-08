@@ -13,6 +13,9 @@ class RecorderViewController: NSViewController {
     @IBOutlet weak var trackerModel: TrackerController!
     @IBOutlet weak var startTime: NSTextField!
     @IBOutlet weak var endTime: NSTextField!
+    
+    var dateformatter: DateFormatter = DateFormatter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -25,14 +28,13 @@ class RecorderViewController: NSViewController {
         trackerModel.on(callback: callback)
     }
     func callback(content: TimeInterval) {
-        let dateformatter = DateFormatter()
         dateformatter.dateFormat = "HH:mm:ss"
-        
-        // print("当前日期时间：\(dateformatter.stringFromDate(now))")
-        let start = dateformatter.string(from: trackerModel.startTime!)
-        let now = dateformatter.string(from: Date())
-        startTime.stringValue = start
-        endTime.stringValue = now
+        if trackerModel.isStop {
+            let start = dateformatter.string(from: trackerModel.startTime!)
+            let end = dateformatter.string(from: trackerModel.endTime!)
+            startTime.stringValue = start
+            endTime.stringValue = end
+        }
     }
     
     @IBAction func submit(_ sender: Any) {
