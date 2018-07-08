@@ -31,6 +31,7 @@
         </customObject>
         <customObject id="Hfz-ZN-Q92" customClass="StatusMenuController" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="settingsWindow" destination="ZdU-Vg-evI" id="cTe-im-icN"/>
                 <outlet property="statusMenu" destination="Ly6-M4-7kg" id="pCH-Xz-Bo3"/>
                 <outlet property="trackerModel" destination="s3M-JA-h5O" id="Wvx-tF-l9m"/>
             </connections>

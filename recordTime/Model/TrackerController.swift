@@ -18,12 +18,15 @@ class TrackerController: NSObject {
     
     var duration: TimeInterval = 3
     var elapsedTime: TimeInterval = 0
-    var onTimeUpdate: (() -> ())? = nil
+    var secondsRemaining: TimeInterval = 0
+    var onTimeUpdate: ((String) -> ())? = nil
     var onCalendarUpdate: (() -> ())? = nil
     
-    var timer: Timer?
+    var timer: Timer? = nil
     var tick: Date? = nil
     var tickInterval: Double = 60
+    
+    var timeRemainingDisplay: String = "00:00"
     
     var isStop: Bool {
         return timer == nil && elapsedTime == 0
@@ -31,36 +34,32 @@ class TrackerController: NSObject {
     var isPause: Bool {
         return timer == nil && elapsedTime > 0
     }
-    
-//    func start() {
-//        startTime = Date()
-//        // 初始化定时器
-//        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(callback), userInfo: nil, repeats: true)
-//        callback()
-//    }
     func initTiming(useSeconds: Bool) {
+        
         tickInterval = (useSeconds) ? 1 : 60
         let now = Date()
+        startTime = now
+        timer?.invalidate()
         timer = Timer(fire: now, interval: tickInterval, repeats: true, block: onTick)
+        // 靠这个走计时器，
+        RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
+        onTick(timer: timer!)
     }
     private func onTick(timer: Timer) {
-        self.onTimeUpdate?()
+        guard let startTime = startTime else { return }
+        
+        elapsedTime = -startTime.timeIntervalSinceNow
+        secondsRemaining = (duration - elapsedTime).rounded()
+        print(secondsRemaining, secondsRemaining < 0, secondsRemaining < -0, secondsRemaining == 0, secondsRemaining == -0)
+        self.onTimeUpdate?(formatTimeString(for: secondsRemaining))
+        if secondsRemaining <= 0 {
+            stop()
+        }
     }
     func stop() {
         timer?.invalidate()
         timer = nil
     }
-    
-//    @objc
-//    dynamic func callback() {
-//        // print("setInterval", Date())
-//        // guard 类似于 if 吧？所以如果 startTime 以及存在，表示已经开始了一个定时器，直接退出
-//        guard let startTime = startTime else { return }
-//
-//        elapsedTime = -startTime.timeIntervalSinceNow
-//        let secondsRemaining = (duration - elapsedTime).rounded()
-//        self.onTimeUpdate!()
-//    }
     /**
      * 将时间格式化
      */
@@ -102,24 +101,26 @@ class TrackerController: NSObject {
      * 格式化时间
      */
     private func formatTimeString(for timeRemaining: TimeInterval) -> String {
+        print(timeRemaining == 0, timeRemaining == -0)
         if timeRemaining == 0 {
-            return "Done!"
+            timeRemainingDisplay = "Done!"
+            return timeRemainingDisplay
         }
         let minutesRemaining = floor(timeRemaining / 60)
         let secondsRemaining = timeRemaining - (minutesRemaining * 60)
         
         let secondsDisplay = String(format: "%02d", Int(secondsRemaining))
-        let timeRemainingDisplay = "\(Int(minutesRemaining)):\(secondsDisplay)"
+        timeRemainingDisplay = "\(Int(minutesRemaining)):\(secondsDisplay)"
         
         return timeRemainingDisplay
     }
-    func getCurrentTime() -> String {
-        return "00:00"
+    func getStrTime() -> String {
+        return timeRemainingDisplay
     }
     /**
      * 暴露给外部用以订阅的方法
      */
-    func subscribe(onTimeUpdate: @escaping () -> ()) {
+    func subscribe(onTimeUpdate: @escaping (String) -> ()) {
         self.onTimeUpdate = onTimeUpdate
 //        self.onCalendarUpdate = onCalendarUpdate
         

@@ -22,6 +22,7 @@ class StatusMenuController: NSViewController {
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var contentMenuItem: NSMenuItem!
     @IBOutlet weak var recordView: RecorderView!
+    @IBOutlet weak var settingsWindow: NSWindow!
     @IBAction func startRecord(_ sender: Any) {
         print("hello swift, let us start!")
         trackerModel.initTiming(useSeconds: true)
@@ -43,13 +44,26 @@ class StatusMenuController: NSViewController {
         }
         statusItem.title = "Start"
         statusItem.menu = statusMenu
-        trackerModel.subscribe(onTimeUpdate: updateMenuTitle)
+        trackerModel.subscribe(onTimeUpdate: callback)
     }
     func refreshState() {
         print("refresh state")
     }
-    private func updateMenuTitle() {
-        statusItem.title = trackerModel.getCurrentTime()
+    private func callback(title: String) {
+        updateMenuTitle(title: trackerModel.timeRemainingDisplay)
+        if trackerModel.secondsRemaining == 0 {
+            let settingsWindowController = NSWindowController.init(window: settingsWindow)
+            settingsWindowController.showWindow(nil)
+            
+            // bring settings window to front
+//            NSApp.activate(ignoringOtherApps: true)
+        }
+    }
+    private func updateMenuTitle(title: String) {
+        let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Helvetica Neue", size: 14.0)!]
+        let font = NSAttributedString(string: title, attributes: fontAttr)
+        statusItem.attributedTitle = font
+        
     }
     func render(for content: String) {
         print("invoke render", content)
