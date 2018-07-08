@@ -16,11 +16,12 @@ class TrackerController: NSObject {
     var startTime: Date?
     var endTime: Date?
     
-    var duration: TimeInterval = 3
+    var duration: TimeInterval = 60
     var elapsedTime: TimeInterval = 0
     var secondsRemaining: TimeInterval = 0
     var onTimeUpdate: ((String) -> ())? = nil
     var onCalendarUpdate: (() -> ())? = nil
+    var onRemaining: ((TimeInterval) -> ())? = nil
     
     var timer: Timer? = nil
     var tick: Date? = nil
@@ -50,8 +51,9 @@ class TrackerController: NSObject {
         
         elapsedTime = -startTime.timeIntervalSinceNow
         secondsRemaining = (duration - elapsedTime).rounded()
-        print(secondsRemaining, secondsRemaining < 0, secondsRemaining < -0, secondsRemaining == 0, secondsRemaining == -0)
+        // print(secondsRemaining, secondsRemaining < 0, secondsRemaining < -0, secondsRemaining == 0, secondsRemaining == -0)
         self.onTimeUpdate?(formatTimeString(for: secondsRemaining))
+        self.onRemaining?(secondsRemaining)
         if secondsRemaining <= 0 {
             stop()
         }
@@ -101,7 +103,7 @@ class TrackerController: NSObject {
      * 格式化时间
      */
     private func formatTimeString(for timeRemaining: TimeInterval) -> String {
-        print(timeRemaining == 0, timeRemaining == -0)
+        // print(timeRemaining == 0, timeRemaining == -0)
         if timeRemaining == 0 {
             timeRemainingDisplay = "Done!"
             return timeRemainingDisplay
@@ -128,5 +130,8 @@ class TrackerController: NSObject {
 //            onCalendarUpdate()
             setDateFormat()
         }
+    }
+    func on(callback: @escaping (TimeInterval) -> ()) {
+        self.onRemaining = callback
     }
 }

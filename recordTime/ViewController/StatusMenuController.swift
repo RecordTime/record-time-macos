@@ -21,11 +21,18 @@ class StatusMenuController: NSViewController {
     // MARK: IB
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var contentMenuItem: NSMenuItem!
-    @IBOutlet weak var recordView: RecorderView!
     @IBOutlet weak var settingsWindow: NSWindow!
+    @IBOutlet weak var recorderWindow: NSWindow!
     @IBAction func startRecord(_ sender: Any) {
         print("hello swift, let us start!")
         trackerModel.initTiming(useSeconds: true)
+    }
+    @IBAction func openSettings(_ sender: Any) {
+        let settingsWindowController = NSWindowController.init(window: settingsWindow)
+        settingsWindowController.showWindow(sender)
+        
+        // bring settings window to front
+        NSApp.activate(ignoringOtherApps: true)
     }
     @IBAction func exit(_ sender: Any) {
         NSApplication.shared.terminate(self)
@@ -36,13 +43,12 @@ class StatusMenuController: NSViewController {
         // Do view setup here.
     }
     override func awakeFromNib() {
-        print("status awake from nib")
         if let button = statusItem.button {
             let icon = NSImage(named: NSImage.Name(rawValue: "icon"))
             icon?.isTemplate = true
             button.image = icon
         }
-        statusItem.title = "Start"
+//        statusItem.title = "Start"
         statusItem.menu = statusMenu
         trackerModel.subscribe(onTimeUpdate: callback)
     }
@@ -52,11 +58,11 @@ class StatusMenuController: NSViewController {
     private func callback(title: String) {
         updateMenuTitle(title: trackerModel.timeRemainingDisplay)
         if trackerModel.secondsRemaining == 0 {
-            let settingsWindowController = NSWindowController.init(window: settingsWindow)
-            settingsWindowController.showWindow(nil)
+            let recorderWindowController = NSWindowController.init(window: recorderWindow)
+            recorderWindowController.showWindow(nil)
             
             // bring settings window to front
-//            NSApp.activate(ignoringOtherApps: true)
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
     private func updateMenuTitle(title: String) {
@@ -64,11 +70,5 @@ class StatusMenuController: NSViewController {
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
         
-    }
-    func render(for content: String) {
-        print("invoke render", content)
-        let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Helvetica Neue", size: 14.0)!]
-        let font = NSAttributedString(string: content, attributes: fontAttr)
-        statusItem.attributedTitle = font
     }
 }

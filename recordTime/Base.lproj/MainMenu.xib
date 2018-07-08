@@ -14,6 +14,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="a" destination="Vf9-UI-emg" id="5dM-gy-zWy"/>
                 <outlet property="appController" destination="Hfz-ZN-Q92" id="B9M-Ai-pHd"/>
             </connections>
         </customObject>
@@ -31,9 +32,17 @@
         </customObject>
         <customObject id="Hfz-ZN-Q92" customClass="StatusMenuController" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="recorderWindow" destination="ZRK-eW-YLr" id="cQX-Uz-cLK"/>
                 <outlet property="settingsWindow" destination="ZdU-Vg-evI" id="cTe-im-icN"/>
                 <outlet property="statusMenu" destination="Ly6-M4-7kg" id="pCH-Xz-Bo3"/>
                 <outlet property="trackerModel" destination="s3M-JA-h5O" id="Wvx-tF-l9m"/>
+            </connections>
+        </customObject>
+        <customObject id="Vf9-UI-emg" customClass="RecorderViewController" customModule="recordTime" customModuleProvider="target">
+            <connections>
+                <outlet property="endTime" destination="qgZ-cs-9fA" id="0Wx-iW-8Ne"/>
+                <outlet property="startTime" destination="aAi-MJ-y9q" id="hX9-qn-hNA"/>
+                <outlet property="trackerModel" destination="s3M-JA-h5O" id="Llu-D7-ZPM"/>
             </connections>
         </customObject>
         <menu id="Ly6-M4-7kg">
@@ -44,10 +53,11 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="xeX-S6-dS5"/>
-                <menuItem title="content" id="J90-d2-dsq">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="设置" keyEquivalent="," id="6AF-8A-Xli">
+                    <connections>
+                        <action selector="openSettings:" target="Hfz-ZN-Q92" id="t4s-G2-0S1"/>
+                    </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="CeR-7B-3Wt"/>
                 <menuItem title="退出" keyEquivalent="q" id="4qR-Zm-HCm">
                     <connections>
                         <action selector="exit:" target="Hfz-ZN-Q92" id="A7v-ks-gIk"/>
@@ -56,57 +66,6 @@
             </items>
             <point key="canvasLocation" x="1142" y="111"/>
         </menu>
-        <customView id="wa6-HV-2ZL" customClass="RecorderView" customModule="recordTime" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="497" height="243"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Qu-z9-ESz">
-                    <rect key="frame" x="35" y="179" width="67" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="时间：" id="3Vu-fC-yHO">
-                        <font key="font" size="13" name=".PingFangSC-Regular"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ez-LE-jtw">
-                    <rect key="frame" x="79" y="187" width="338" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="1Zh-34-G01">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="syc-c7-udp">
-                    <rect key="frame" x="36" y="116" width="92" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="bTQ-j7-YoC">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ad7-Pd-lTp">
-                    <rect key="frame" x="36" y="66" width="425" height="95"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Dw7-Hr-2Yb">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ivW-Hl-vWJ">
-                    <rect key="frame" x="393" y="22" width="67" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="提交" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eSd-7M-1d1">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" size="13" name=".PingFangSC-Regular"/>
-                    </buttonCell>
-                </button>
-            </subviews>
-            <point key="canvasLocation" x="1082.5" y="327.5"/>
-        </customView>
         <window title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ZdU-Vg-evI">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -194,6 +153,69 @@
             <connections>
                 <outlet property="delegate" destination="KXF-Lt-6NO" id="qJM-Pu-iRa"/>
             </connections>
+        </window>
+        <window title="Recorder" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ZRK-eW-YLr">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="514" y="278" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" id="zuC-BP-8Ku">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aAi-MJ-y9q">
+                        <rect key="frame" x="33" y="225" width="105" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="5AT-Cp-pHK">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3uN-Da-CLJ">
+                        <rect key="frame" x="35" y="98" width="411" height="65"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Q95-lF-oQZ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cf-Mj-fYn">
+                        <rect key="frame" x="371" y="49" width="81" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="R0c-Tm-K0Z">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="submit:" target="Vf9-UI-emg" id="7hc-oa-oBR"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wBj-J6-rcq">
+                        <rect key="frame" x="113" y="225" width="13" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="~" id="FhI-Z6-5jh">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgZ-cs-9fA">
+                        <rect key="frame" x="167" y="225" width="150" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="E0o-zC-v6O">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="Vf9-UI-emg" id="PBx-II-6rx"/>
+            </connections>
+            <point key="canvasLocation" x="111" y="754"/>
         </window>
     </objects>
 </document>
