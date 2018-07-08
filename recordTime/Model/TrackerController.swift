@@ -14,12 +14,12 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
     var startTime: Date?
     var endTime: Date?
     var timer: Timer? = nil
-    var duration: TimeInterval = 10
+    var duration: TimeInterval = 1500
     // MARK: 休息相关属性
     var startRestTime: Date?
     var endRestTime: Date?
     var restTimer: Timer? = nil
-    var restDuration: TimeInterval = 10
+    var restDuration: TimeInterval = 300
     
     var tick: Date? = nil
     var timeRemainingDisplay: String = "00:00"
@@ -75,6 +75,9 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
      * 开始休息
      */
     func startRest() {
+//        if let url = URL(string: "https://www.google.com"), NSWorkspace.shared.open(url) {
+//            print("default browser was successfully opened")
+//        }
         let now = Date()
         startRestTime = now
         restTimer?.invalidate()
@@ -107,7 +110,7 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
     private func formatTimeString(for timeRemaining: TimeInterval) -> String {
         // print(timeRemaining == 0, timeRemaining == -0)
         if timeRemaining == 0 {
-            timeRemainingDisplay = "Done!"
+            timeRemainingDisplay = ""
             return timeRemainingDisplay
         }
         let minutesRemaining = floor(timeRemaining / 60)
