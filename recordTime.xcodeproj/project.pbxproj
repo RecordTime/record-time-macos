@@ -12,6 +12,9 @@
 		8EBB9FCB20F1F4C700B670BE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9FC920F1F4C700B670BE /* MainMenu.xib */; };
 		8ECA666A20F1FBCE00389B35 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA666920F1FBCE00389B35 /* Tracker.swift */; };
 		8ECA666C20F1FDF200389B35 /* StatusMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA666B20F1FDF200389B35 /* StatusMenuController.swift */; };
+		8ECA666F20F2059800389B35 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA666E20F2059800389B35 /* RecorderView.swift */; };
+		8ECA668320F23EC400389B35 /* TrackerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA668220F23EC400389B35 /* TrackerController.swift */; };
+		8ECA668520F241F100389B35 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECA668420F241F100389B35 /* SettingsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,9 @@
 		8EBB9FCD20F1F4C700B670BE /* recordTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = recordTime.entitlements; sourceTree = "<group>"; };
 		8ECA666920F1FBCE00389B35 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8ECA666B20F1FDF200389B35 /* StatusMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuController.swift; sourceTree = "<group>"; };
+		8ECA666E20F2059800389B35 /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
+		8ECA668220F23EC400389B35 /* TrackerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerController.swift; sourceTree = "<group>"; };
+		8ECA668420F241F100389B35 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +61,7 @@
 		8EBB9FC420F1F4C600B670BE /* recordTime */ = {
 			isa = PBXGroup;
 			children = (
+				8ECA666D20F2054600389B35 /* View */,
 				8EBB9FD420F1F4DB00B670BE /* Model */,
 				8EBB9FD320F1F4D200B670BE /* ViewController */,
 				8EBB9FC520F1F4C600B670BE /* AppDelegate.swift */,
@@ -78,8 +85,18 @@
 			isa = PBXGroup;
 			children = (
 				8ECA666920F1FBCE00389B35 /* Tracker.swift */,
+				8ECA668220F23EC400389B35 /* TrackerController.swift */,
+				8ECA668420F241F100389B35 /* SettingsController.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8ECA666D20F2054600389B35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8ECA666E20F2059800389B35 /* RecorderView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,8 +169,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ECA668520F241F100389B35 /* SettingsController.swift in Sources */,
 				8ECA666C20F1FDF200389B35 /* StatusMenuController.swift in Sources */,
 				8ECA666A20F1FBCE00389B35 /* Tracker.swift in Sources */,
+				8ECA666F20F2059800389B35 /* RecorderView.swift in Sources */,
+				8ECA668320F23EC400389B35 /* TrackerController.swift in Sources */,
 				8EBB9FC620F1F4C600B670BE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,7 +17,7 @@ class Tracker {
     var startTime: Date?
     var endTime: Date?
     
-    var duration: TimeInterval = 10
+    var duration: TimeInterval = 3
     var elapsedTime: TimeInterval = 0
     
     var timer: Timer?
@@ -44,7 +44,7 @@ class Tracker {
     
     @objc
     dynamic func callback() {
-        print("setInterval", Date())
+        // print("setInterval", Date())
         // guard 类似于 if 吧？所以如果 startTime 以及存在，表示已经开始了一个定时器，直接退出
         guard let startTime = startTime else { return }
         
