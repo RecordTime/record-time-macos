@@ -57,7 +57,7 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
         // print(secondsRemaining, secondsRemaining < 0, secondsRemaining < -0, secondsRemaining == 0, secondsRemaining == -0)
         self.onTimeUpdate?(formatTimeString(for: secondsRemaining))
         self.onRemaining?(secondsRemaining)
-        if secondsRemaining == 3 {
+        if secondsRemaining == 10 {
             restMessage()
         }
         if secondsRemaining <= 0 {
@@ -93,7 +93,7 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
         secondsRemaining = (restDuration - elapsedTime).rounded()
         self.onTimeUpdate?(formatTimeString(for: secondsRemaining))
         self.onRemaining?(secondsRemaining)
-        if secondsRemaining == 3 {
+        if secondsRemaining == 5 {
             workMessage()
         }
         if secondsRemaining <= 0 {

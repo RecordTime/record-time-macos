@@ -47,7 +47,9 @@ class StatusMenuController: NSViewController {
             icon?.isTemplate = true
             button.image = icon
         }
-//        statusItem.title = "Start"
+//        let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Gill Sans", size: 14.0)!]
+//        let font = NSAttributedString(string: "23:14", attributes: fontAttr)
+//        statusItem.attributedTitle = font
         statusItem.menu = statusMenu
         trackerModel.subscribe(onTimeUpdate: callback)
     }
@@ -57,15 +59,16 @@ class StatusMenuController: NSViewController {
     private func callback(title: String) {
         updateMenuTitle(title: trackerModel.timeRemainingDisplay)
         if trackerModel.secondsRemaining == 0 {
-            let recorderWindowController = NSWindowController.init(window: recorderWindow)
-            recorderWindowController.showWindow(nil)
+//            let recorderWindowController = NSWindowController.init(window: recorderWindow)
+//            recorderWindowController.showWindow(nil)
             
             // bring settings window to front
-            NSApp.activate(ignoringOtherApps: true)
+//            NSApp.activate(ignoringOtherApps: true)
         }
     }
     private func updateMenuTitle(title: String) {
-        let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Helvetica Neue", size: 14.0)!]
+//        let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Herculanum", size: 12.0)!]
+        let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Gill Sans", size: 14.0)!]
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
         
