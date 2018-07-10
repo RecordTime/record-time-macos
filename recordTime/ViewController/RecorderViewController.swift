@@ -23,15 +23,6 @@ class RecorderViewController: NSViewController {
     func refreshState() {
         print("refresh state")
     }
-    func callback(content: TimeInterval) {
-        dateformatter.dateFormat = "HH:mm:ss"
-        if trackerModel.isStop {
-            let start = dateformatter.string(from: trackerModel.startTime!)
-            let end = dateformatter.string(from: trackerModel.endTime!)
-            startTime.stringValue = start
-            endTime.stringValue = end
-        }
-    }
     
     @IBAction func submit(_ sender: Any) {
     }

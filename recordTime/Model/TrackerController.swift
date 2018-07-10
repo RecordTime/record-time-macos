@@ -13,9 +13,9 @@ class TrackerController: NSObject {
     // MARK: 番茄钟相关属性
     var startTime: Date?
     var endTime: Date?
-    var timer: Timer? = nil
-//    var duration: TimeInterval = 1500
-    var duration: TimeInterval = 10
+    var workTimer: Timer? = nil
+    var duration: TimeInterval = 1500
+//    var duration: TimeInterval = 10
     // MARK: 休息相关属性
     var startRestTime: Date?
     var endRestTime: Date?
@@ -23,7 +23,6 @@ class TrackerController: NSObject {
     var restDuration: TimeInterval = 300
 //    var restDuration: TimeInterval = 3
     
-    var tick: Date? = nil
     // 过去的秒数
     var elapsedTime: TimeInterval = 0
     // 剩余的秒数
@@ -40,22 +39,20 @@ class TrackerController: NSObject {
     @IBAction func stopModal(_ sender: Any) {
         NSApplication.shared.stopModal()
     }
-    var isStop: Bool {
-        return timer == nil
-    }
-    var isPause: Bool {
-        return timer == nil && elapsedTime > 0
+    var isWorking: Bool {
+        return workTimer != nil
     }
     // 开始番茄钟
     func startWork() {
         // todo: 如果正在跑一个，就不能开始
+        stopRest()
         let now = Date()
         startTime = now
-        timer?.invalidate()
-        timer = Timer(fire: now, interval: 1, repeats: true, block: onTick)
+        workTimer?.invalidate()
+        workTimer = Timer(fire: now, interval: 1, repeats: true, block: onTick)
         // 靠这个走计时器，
-        RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
-        onTick(timer: timer!)
+        RunLoop.main.add(workTimer!, forMode: RunLoopMode.commonModes)
+        onTick(timer: workTimer!)
     }
     private func onTick(timer: Timer) {
         guard let startTime = startTime else { return }
@@ -64,14 +61,17 @@ class TrackerController: NSObject {
         secondsRemaining = (duration - elapsedTime).rounded()
         self.onTimeUpdate?(secondsRemaining)
     }
-    func stop() {
-        timer?.invalidate()
-        timer = nil
+    func stopWorking() {
+        if workTimer != nil {
+            workTimer?.invalidate()
+            workTimer = nil
+        }
     }
     /**
      * 开始休息
      */
     func startRest() {
+        stopWorking()
 //        NSApplication.shared.runModal(for: self.modalWindow)
         let now = Date()
         startRestTime = now
@@ -88,9 +88,11 @@ class TrackerController: NSObject {
         secondsRemaining = (restDuration - elapsedTime).rounded()
         self.onTimeUpdate?(secondsRemaining)
     }
-    private func stopRest() {
-        restTimer?.invalidate()
-        restTimer = nil
+    func stopRest() {
+        if restTimer != nil {
+            restTimer?.invalidate()
+            restTimer = nil
+        }
     }
     /**
      * 格式化时间
