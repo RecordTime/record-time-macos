@@ -38,7 +38,8 @@
             <connections>
                 <outlet property="recorderWindow" destination="ZRK-eW-YLr" id="cQX-Uz-cLK"/>
                 <outlet property="settingsWindow" destination="ZdU-Vg-evI" id="cTe-im-icN"/>
-                <outlet property="statusMenu" destination="Ly6-M4-7kg" id="pCH-Xz-Bo3"/>
+                <outlet property="startMenuItem" destination="W7v-A4-pkM" id="Njo-UL-uyi"/>
+                <outlet property="statusMenu" destination="Ly6-M4-7kg" id="KKm-wD-bHp"/>
                 <outlet property="trackerModel" destination="s3M-JA-h5O" id="Wvx-tF-l9m"/>
             </connections>
         </customObject>
@@ -53,23 +54,23 @@
             <items>
                 <menuItem title="开始计时" keyEquivalent="s" id="W7v-A4-pkM">
                     <connections>
-                        <action selector="startWrok:" target="Hfz-ZN-Q92" id="YX9-Xz-tDU"/>
+                        <action selector="startWork:" target="Hfz-ZN-Q92" id="HxH-Fc-cav"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="xeX-S6-dS5"/>
                 <menuItem title="设置" keyEquivalent="," id="6AF-8A-Xli">
                     <connections>
-                        <action selector="openSettings:" target="Hfz-ZN-Q92" id="t4s-G2-0S1"/>
+                        <action selector="openSettings:" target="Hfz-ZN-Q92" id="o8r-Sz-xJ8"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="OuF-Eg-PAe"/>
                 <menuItem title="退出" keyEquivalent="q" id="4qR-Zm-HCm">
                     <connections>
-                        <action selector="exit:" target="Hfz-ZN-Q92" id="A7v-ks-gIk"/>
+                        <action selector="exit:" target="Hfz-ZN-Q92" id="WVz-Nd-Voh"/>
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="1142" y="111"/>
+            <point key="canvasLocation" x="1083" y="155"/>
         </menu>
         <window title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ZdU-Vg-evI">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>

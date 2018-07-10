@@ -16,6 +16,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
     @IBOutlet weak var trackerModel: TrackerController!
     // MARK: IB
     @IBOutlet weak var statusMenu: NSMenu!
+    @IBOutlet weak var startMenuItem: NSMenuItem!
     
     @IBOutlet weak var settingsWindow: NSWindow!
     @IBOutlet weak var recorderWindow: NSWindow!
@@ -36,6 +37,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
         trackerModel.subscribe(onTimeUpdate: callback)
     }
     private func callback(seconds: TimeInterval) {
+        print("tick", seconds)
         if trackerModel.isWorking {
             if seconds <= 0 {
                 stopWork()
@@ -60,14 +62,21 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
     }
-    func updateMenu() {
-        statusMenu.removeItem(at: 0)
-        statusMenu.insertItem(NSMenuItem(title: "退出", action: #selector(sendRestMessage), keyEquivalent: "q"), at: 0)
+    func updateMenu(isWorking: Bool) {
+        if isWorking {
+            startMenuItem.title = "停止计时"
+        } else {
+            startMenuItem.title = "开始计时"
+        }
+    }
+    @IBAction func menuItemClick(sender: AnyObject) {
+        print("click")
     }
     func refreshState() {
         print("refresh state")
     }
     func startWork() {
+        updateMenu(isWorking: true)
         trackerModel.startWork()
     }
     func stopWork() {
@@ -98,11 +107,14 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
     }
-}
-
-extension StatusMenuController {
-    @IBAction func startWrok(_ sender: Any) {
-        trackerModel.startWork()
+    @IBAction func startWork(_ sender: Any) {
+        if trackerModel.isWorking {
+            stopWork()
+            updateMenu(isWorking: false)
+            statusItem.title = nil
+        } else {
+            startWork()
+        }
     }
     @IBAction func openSettings(_ sender: Any) {
         let settingsWindowController = NSWindowController.init(window: settingsWindow)
