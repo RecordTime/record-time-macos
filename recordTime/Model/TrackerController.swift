@@ -14,14 +14,14 @@ class TrackerController: NSObject {
     var startTime: Date?
     var endTime: Date?
     var workTimer: Timer? = nil
-    var duration: TimeInterval = 1500
-//    var duration: TimeInterval = 10
+//    var duration: TimeInterval = 1500
+    var duration: TimeInterval = 10
     // MARK: 休息相关属性
     var startRestTime: Date?
     var endRestTime: Date?
     var restTimer: Timer? = nil
-    var restDuration: TimeInterval = 300
-//    var restDuration: TimeInterval = 3
+//    var restDuration: TimeInterval = 300
+    var restDuration: TimeInterval = 3
     
     // 过去的秒数
     var elapsedTime: TimeInterval = 0
@@ -61,7 +61,7 @@ class TrackerController: NSObject {
         secondsRemaining = (duration - elapsedTime).rounded()
         self.onTimeUpdate?(secondsRemaining)
     }
-    func stopWorking() {
+    func stopWork() {
         if workTimer != nil {
             workTimer?.invalidate()
             workTimer = nil
@@ -71,7 +71,7 @@ class TrackerController: NSObject {
      * 开始休息
      */
     func startRest() {
-        stopWorking()
+        stopWork()
 //        NSApplication.shared.runModal(for: self.modalWindow)
         let now = Date()
         startRestTime = now

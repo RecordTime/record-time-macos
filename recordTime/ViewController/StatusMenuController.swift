@@ -36,6 +36,23 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
         trackerModel.subscribe(onTimeUpdate: callback)
     }
     private func callback(seconds: TimeInterval) {
+        if trackerModel.isWorking {
+            if seconds <= 0 {
+                stopWork()
+                startRest()
+            }
+            if seconds == 10 {
+                sendRestMessage()
+            }
+        } else {
+            if seconds <= 0 {
+                stopRest()
+                startWork()
+            }
+            if seconds == 3 {
+                sendWorkMessage()
+            }
+        }
         updateMenuTitle(title: trackerModel.timeRemainingDisplay)
     }
     private func updateMenuTitle(title: String) {
@@ -43,8 +60,24 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
     }
+    func updateMenu() {
+        statusMenu.removeItem(at: 0)
+        statusMenu.insertItem(NSMenuItem(title: "退出", action: #selector(sendRestMessage), keyEquivalent: "q"), at: 0)
+    }
     func refreshState() {
         print("refresh state")
+    }
+    func startWork() {
+        trackerModel.startWork()
+    }
+    func stopWork() {
+        trackerModel.stopWork()
+    }
+    func startRest() {
+        trackerModel.startRest()
+    }
+    func stopRest() {
+        trackerModel.stopRest()
     }
     private func notify(title: String, description: String, stayCenter: Bool) {
         let userNotification = NSUserNotification()
@@ -56,10 +89,10 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
             NSUserNotificationCenter.default.removeDeliveredNotification(userNotification)
         }
     }
-    func sendRestMessage() {
+    @objc func sendRestMessage() {
         notify(title: "TimeTracker", description: "欢乐时光就要开始了~", stayCenter: true)
     }
-    func workMessage() {
+    func sendWorkMessage() {
         notify(title: "TimeTracker", description: "开打开打!", stayCenter: true)
     }
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
