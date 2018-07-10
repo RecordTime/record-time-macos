@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
+class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, NSWindowDelegate {
     // 增加状态栏图标
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     let userNotificationCenter = NSUserNotificationCenter.default
@@ -18,9 +18,12 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var startMenuItem: NSMenuItem!
     
+    @IBAction func exitRest(_ sender: Any) {
+    }
     @IBOutlet weak var settingsWindow: NSWindow!
     @IBOutlet weak var recorderWindow: NSWindow!
     
+    @IBOutlet weak var modalView: NSPanel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -84,6 +87,32 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate {
     }
     func startRest() {
         trackerModel.startRest()
+        showModal()
+    }
+    func showModal() {
+        let settingsWindowController = NSWindowController.init(window: modalView)
+//        settingsWindowController.center()
+//        settingsWindowController.toggleFullScreen(nil)
+        modalView.setIsZoomed(true)
+//        modalView.isFloatingPanel = true
+//        modalView.worksWhenModal = true
+//        modalView.frame = NSRect(dictionaryRepresentation: <#T##CFDictionary#>)
+        settingsWindowController.showWindow(nil)
+//        settingsWindowController.toggleFullScreen(nil)
+//        settingsWindowController.makeKey()
+//
+//        modalView.toggleFullScreen(nil)
+        // bring settings window to front
+//        let frame = CGRect(x: 0, y: 0, width: 400, height: 280)
+//        let style: NSWindow.StyleMask = [.titled,.closable,.resizable,.hudWindow,.fullScreen]
+//        //创建window
+//        myWindow = NSWindow(contentRect:frame, styleMask:style, backing:.buffered, defer:false)
+//        myWindow.title = "New Create Window"
+//        //显示window
+//        myWindow.makeKeyAndOrderFront(self);
+//        //居中
+//        myWindow.center()
+        NSApp.activate(ignoringOtherApps: true)
     }
     func stopRest() {
         trackerModel.stopRest()

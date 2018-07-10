@@ -19,11 +19,7 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="s3M-JA-h5O" customClass="TrackerController" customModule="recordTime" customModuleProvider="target">
-            <connections>
-                <outlet property="modalWindow" destination="J4L-Ai-xJb" id="kcg-Ko-hPm"/>
-            </connections>
-        </customObject>
+        <customObject id="s3M-JA-h5O" customClass="TrackerController" customModule="recordTime" customModuleProvider="target"/>
         <customObject id="KXF-Lt-6NO" customClass="SettingsController" customModule="recordTime" customModuleProvider="target">
             <connections>
                 <outlet property="showAMPMBox" destination="LBK-l1-PjW" id="HEe-WT-Byd"/>
@@ -36,6 +32,7 @@
         </customObject>
         <customObject id="Hfz-ZN-Q92" customClass="StatusMenuController" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="modalView" destination="0sv-fi-PhT" id="yV2-6d-NuF"/>
                 <outlet property="recorderWindow" destination="ZRK-eW-YLr" id="cQX-Uz-cLK"/>
                 <outlet property="settingsWindow" destination="ZdU-Vg-evI" id="cTe-im-icN"/>
                 <outlet property="startMenuItem" destination="W7v-A4-pkM" id="Njo-UL-uyi"/>
@@ -223,23 +220,34 @@
             </connections>
             <point key="canvasLocation" x="111" y="754"/>
         </window>
-        <window title="ModalWindow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="J4L-Ai-xJb">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+        <customObject id="WZo-HW-FPJ" customClass="ModalViewController" customModule="recordTime" customModuleProvider="target"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="0sv-fi-PhT" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" resizable="YES" utility="YES" nonactivatingPanel="YES" HUD="YES" fullSizeContentView="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="131" y="158" width="480" height="270"/>
+            <rect key="contentRect" x="482" y="527" width="480" height="270"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-            <view key="contentView" id="XMc-YC-cGH">
+            <view key="contentView" id="5qz-7R-idV">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <visualEffectView appearanceType="vibrantDark" fixedFrame="YES" blendingMode="behindWindow" material="mediumLight" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="FUB-L3-a43">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="250"/>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggS-A1-1bu">
+                        <rect key="frame" x="210" y="126" width="62" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    </visualEffectView>
+                        <buttonCell key="cell" type="push" title="exit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hhe-hD-cRR">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="exit:" target="WZo-HW-FPJ" id="Tt5-Kv-kuH"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="139" y="-118"/>
+            <connections>
+                <outlet property="delegate" destination="WZo-HW-FPJ" id="Ur0-T5-lhe"/>
+            </connections>
+            <point key="canvasLocation" x="-91" y="-378"/>
         </window>
     </objects>
 </document>
