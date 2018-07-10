@@ -19,13 +19,9 @@ class RecorderViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func viewDidAppear() {
-        print("hi?")
-    }
     
     func refreshState() {
         print("refresh state")
-        trackerModel.on(callback: callback)
     }
     func callback(content: TimeInterval) {
         dateformatter.dateFormat = "HH:mm:ss"

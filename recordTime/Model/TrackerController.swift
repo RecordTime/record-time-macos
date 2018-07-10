@@ -8,30 +8,38 @@
 
 import Cocoa
 
-class TrackerController: NSObject, NSUserNotificationCenterDelegate {
+class TrackerController: NSObject {
     let formatter = DateFormatter()
     // MARK: 番茄钟相关属性
     var startTime: Date?
     var endTime: Date?
     var timer: Timer? = nil
-    var duration: TimeInterval = 1500
+//    var duration: TimeInterval = 1500
+    var duration: TimeInterval = 10
     // MARK: 休息相关属性
     var startRestTime: Date?
     var endRestTime: Date?
     var restTimer: Timer? = nil
     var restDuration: TimeInterval = 300
+//    var restDuration: TimeInterval = 3
     
     var tick: Date? = nil
-    var timeRemainingDisplay: String = "00:00"
     // 过去的秒数
     var elapsedTime: TimeInterval = 0
     // 剩余的秒数
     var secondsRemaining: TimeInterval = 0
+    var timeRemainingDisplay: String {
+        get {
+            return formatTimeString(for: secondsRemaining)
+        }
+    }
     // 时间变化回调
-    var onTimeUpdate: ((String) -> ())? = nil
-    // 时间变化回调
-    var onRemaining: ((TimeInterval) -> ())? = nil
+    var onTimeUpdate: ((TimeInterval) -> ())? = nil
     
+    @IBOutlet weak var modalWindow: NSWindow!
+    @IBAction func stopModal(_ sender: Any) {
+        NSApplication.shared.stopModal()
+    }
     var isStop: Bool {
         return timer == nil
     }
@@ -39,7 +47,7 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
         return timer == nil && elapsedTime > 0
     }
     // 开始番茄钟
-    func initTiming() {
+    func startWork() {
         // todo: 如果正在跑一个，就不能开始
         let now = Date()
         startTime = now
@@ -54,18 +62,7 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
         
         elapsedTime = -startTime.timeIntervalSinceNow
         secondsRemaining = (duration - elapsedTime).rounded()
-        // print(secondsRemaining, secondsRemaining < 0, secondsRemaining < -0, secondsRemaining == 0, secondsRemaining == -0)
-        self.onTimeUpdate?(formatTimeString(for: secondsRemaining))
-        self.onRemaining?(secondsRemaining)
-        if secondsRemaining == 10 {
-            restMessage()
-        }
-        if secondsRemaining <= 0 {
-            elapsedTime = 0
-            endTime = Date()
-            stop()
-            startRest()
-        }
+        self.onTimeUpdate?(secondsRemaining)
     }
     func stop() {
         timer?.invalidate()
@@ -75,9 +72,7 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
      * 开始休息
      */
     func startRest() {
-//        if let url = URL(string: "https://www.google.com"), NSWorkspace.shared.open(url) {
-//            print("default browser was successfully opened")
-//        }
+//        NSApplication.shared.runModal(for: self.modalWindow)
         let now = Date()
         startRestTime = now
         restTimer?.invalidate()
@@ -91,14 +86,7 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
         
         elapsedTime = -startTime.timeIntervalSinceNow
         secondsRemaining = (restDuration - elapsedTime).rounded()
-        self.onTimeUpdate?(formatTimeString(for: secondsRemaining))
-        self.onRemaining?(secondsRemaining)
-        if secondsRemaining == 5 {
-            workMessage()
-        }
-        if secondsRemaining <= 0 {
-            stopRest()
-        }
+        self.onTimeUpdate?(secondsRemaining)
     }
     private func stopRest() {
         restTimer?.invalidate()
@@ -109,8 +97,8 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
      */
     private func formatTimeString(for timeRemaining: TimeInterval) -> String {
         // print(timeRemaining == 0, timeRemaining == -0)
+        var timeRemainingDisplay: String = ""
         if timeRemaining == 0 {
-            timeRemainingDisplay = ""
             return timeRemainingDisplay
         }
         let minutesRemaining = floor(timeRemaining / 60)
@@ -121,48 +109,10 @@ class TrackerController: NSObject, NSUserNotificationCenterDelegate {
         
         return timeRemainingDisplay
     }
-    func getStrTime() -> String {
-        return timeRemainingDisplay
-    }
-    func restMessage() {
-        let userNotification = NSUserNotification()
-        userNotification.title = "提示"
-        userNotification.informativeText = "欢乐时光就要开始了"
-        userNotification.soundName = NSUserNotificationDefaultSoundName
-        // 使用 NSUserNotificationCenter 发送 NSUserNotification
-        let userNotificationCenter = NSUserNotificationCenter.default
-        
-        userNotificationCenter.delegate = self
-        userNotificationCenter.scheduleNotification(userNotification)
-        // 将消息从消息中心移除
-        NSUserNotificationCenter.default.removeDeliveredNotification(userNotification)
-    }
-    func workMessage() {
-        let userNotification = NSUserNotification()
-        userNotification.title = "提示"
-        userNotification.informativeText = "准备工作了"
-        userNotification.soundName = NSUserNotificationDefaultSoundName
-        // 使用 NSUserNotificationCenter 发送 NSUserNotification
-        let userNotificationCenter = NSUserNotificationCenter.default
-        
-        userNotificationCenter.delegate = self
-        userNotificationCenter.scheduleNotification(userNotification)
-        // 将消息从消息中心移除
-        NSUserNotificationCenter.default.removeDeliveredNotification(userNotification)
-    }
-    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
-        return true
-    }
     /**
      * 暴露给外部用以订阅的方法
      */
-    func subscribe(onTimeUpdate: @escaping (String) -> ()) {
+    func subscribe(onTimeUpdate: @escaping (TimeInterval) -> ()) {
         self.onTimeUpdate = onTimeUpdate
-    }
-    /**
-     * 暴露给外部用以订阅的方法
-     */
-    func on(callback: @escaping (TimeInterval) -> ()) {
-        self.onRemaining = callback
     }
 }

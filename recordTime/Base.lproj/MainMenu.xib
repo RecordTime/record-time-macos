@@ -19,7 +19,11 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="s3M-JA-h5O" customClass="TrackerController" customModule="recordTime" customModuleProvider="target"/>
+        <customObject id="s3M-JA-h5O" customClass="TrackerController" customModule="recordTime" customModuleProvider="target">
+            <connections>
+                <outlet property="modalWindow" destination="J4L-Ai-xJb" id="kcg-Ko-hPm"/>
+            </connections>
+        </customObject>
         <customObject id="KXF-Lt-6NO" customClass="SettingsController" customModule="recordTime" customModuleProvider="target">
             <connections>
                 <outlet property="showAMPMBox" destination="LBK-l1-PjW" id="HEe-WT-Byd"/>
@@ -49,7 +53,7 @@
             <items>
                 <menuItem title="开始计时" keyEquivalent="s" id="W7v-A4-pkM">
                     <connections>
-                        <action selector="startRecord:" target="Hfz-ZN-Q92" id="Exh-YG-yBy"/>
+                        <action selector="startWrok:" target="Hfz-ZN-Q92" id="YX9-Xz-tDU"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="xeX-S6-dS5"/>
@@ -58,6 +62,7 @@
                         <action selector="openSettings:" target="Hfz-ZN-Q92" id="t4s-G2-0S1"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="OuF-Eg-PAe"/>
                 <menuItem title="退出" keyEquivalent="q" id="4qR-Zm-HCm">
                     <connections>
                         <action selector="exit:" target="Hfz-ZN-Q92" id="A7v-ks-gIk"/>
@@ -69,7 +74,7 @@
         <window title="Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ZdU-Vg-evI">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="131" y="158" width="480" height="270"/>
+            <rect key="contentRect" x="524" y="440" width="480" height="270"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="2Nz-xt-4xF">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
@@ -216,6 +221,24 @@
                 <outlet property="delegate" destination="Vf9-UI-emg" id="PBx-II-6rx"/>
             </connections>
             <point key="canvasLocation" x="111" y="754"/>
+        </window>
+        <window title="ModalWindow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="J4L-Ai-xJb">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="131" y="158" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" id="XMc-YC-cGH">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <visualEffectView appearanceType="vibrantDark" fixedFrame="YES" blendingMode="behindWindow" material="mediumLight" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="FUB-L3-a43">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="250"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </visualEffectView>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="139" y="-118"/>
         </window>
     </objects>
 </document>
