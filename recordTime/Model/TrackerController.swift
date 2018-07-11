@@ -8,6 +8,12 @@
 
 import Cocoa
 
+enum TRACK_STATUS: NSNumber {
+    case STOP = 0
+    case WORKING = 1
+    case RESTING = 2
+}
+
 class TrackerController: NSObject {
     let formatter = DateFormatter()
     // MARK: 番茄钟相关属性
@@ -34,6 +40,7 @@ class TrackerController: NSObject {
     }
     // 时间变化回调
     var onTimeUpdate: ((TimeInterval) -> ())? = nil
+    var statusChanged: (() -> ())? = nil
     
     @IBOutlet weak var modalWindow: NSWindow!
     @IBAction func stopModal(_ sender: Any) {
@@ -41,6 +48,12 @@ class TrackerController: NSObject {
     }
     var isWorking: Bool {
         return workTimer != nil
+    }
+    var isResting: Bool {
+        return restTimer != nil
+    }
+    var isStop: Bool {
+        return workTimer == nil && restTimer == nil
     }
     // 开始番茄钟
     func startWork() {
@@ -53,6 +66,7 @@ class TrackerController: NSObject {
         // 靠这个走计时器，
         RunLoop.main.add(workTimer!, forMode: RunLoopMode.commonModes)
         onTick(timer: workTimer!)
+        statusChanged?()
     }
     private func onTick(timer: Timer) {
         guard let startTime = startTime else { return }
@@ -66,6 +80,7 @@ class TrackerController: NSObject {
             workTimer?.invalidate()
             workTimer = nil
         }
+        statusChanged?()
     }
     /**
      * 开始休息
@@ -80,6 +95,7 @@ class TrackerController: NSObject {
         // 靠这个走计时器，
         RunLoop.main.add(restTimer!, forMode: RunLoopMode.commonModes)
         onRestTick(timer: restTimer!)
+        statusChanged?()
     }
     private func onRestTick(timer: Timer) {
         guard let startTime = startRestTime else { return }
@@ -93,6 +109,7 @@ class TrackerController: NSObject {
             restTimer?.invalidate()
             restTimer = nil
         }
+        statusChanged?()
     }
     /**
      * 格式化时间

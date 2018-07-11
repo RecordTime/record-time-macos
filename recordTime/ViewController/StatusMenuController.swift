@@ -36,10 +36,27 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             let icon = NSImage(named: NSImage.Name(rawValue: "icon"))
             icon?.isTemplate = true
             button.image = icon
+//            button.action = #selector(test)
         }
         statusItem.menu = statusMenu
         trackerModel.subscribe(onTimeUpdate: callback)
+        trackerModel.statusChanged = updateMenu
 //        print(NSWorkspace.shared.runningApplications)
+    }
+//    @objc func test() {
+//        print("click btn")
+//    }
+    override func viewWillLayout() {
+        self.viewWillLayout()
+        print("will layout")
+    }
+    override func viewWillAppear() {
+        self.viewWillAppear()
+        print("will appear")
+    }
+    func windowDidBecomeMain(_ notification: Notification) {
+        self.windowDidBecomeMain(notification)
+        print("becom main")
     }
     private func callback(seconds: TimeInterval) {
         print("tick", seconds)
@@ -72,21 +89,25 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
     }
-    func updateMenu(isWorking: Bool) {
-        if isWorking {
-            startMenuItem.title = "停止计时"
-        } else {
-            startMenuItem.title = "开始计时"
+    func updateMenu() {
+        print("update menu", trackerModel.isWorking, trackerModel.isResting, trackerModel.isStop)
+        if trackerModel.isWorking {
+            startMenuItem.title = "结束番茄钟"
+            return
+        }
+        if trackerModel.isResting {
+            startMenuItem.title = "结束休息"
+            return
+        }
+        if trackerModel.isStop {
+            startMenuItem.title = "开始番茄钟"
+            return
         }
     }
     @IBAction func menuItemClick(sender: AnyObject) {
         print("click")
     }
-    func refreshState() {
-        print("refresh state")
-    }
     func startWork() {
-        updateMenu(isWorking: true)
         trackerModel.startWork()
     }
     func stopWork() {
@@ -96,6 +117,9 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         trackerModel.startRest()
 //        showModal()
         openUrl()
+    }
+    func stopRest() {
+        trackerModel.stopRest()
     }
     func openUrl() {
         if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.12"), NSWorkspace.shared.open(url) {
@@ -107,9 +131,6 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         modalView.setIsZoomed(true)
         settingsWindowController.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
-    }
-    func stopRest() {
-        trackerModel.stopRest()
     }
     private func notify(title: String, description: String, stayCenter: Bool) {
         let userNotification = NSUserNotification()
@@ -130,13 +151,25 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
     }
+    /**
+     * 开始计时与结束计时
+     */
     @IBAction func startWork(_ sender: Any) {
         if trackerModel.isWorking {
             stopWork()
-            updateMenu(isWorking: false)
+            updateMenu()
             statusItem.title = nil
-        } else {
+            return
+        }
+        if trackerModel.isResting {
+            stopRest()
+            updateMenu()
+            statusItem.title = nil
+            return
+        }
+        if trackerModel.isStop {
             startWork()
+            return
         }
     }
     @IBAction func openSettings(_ sender: Any) {

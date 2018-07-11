@@ -18,21 +18,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-//        appController.refreshState()
-//        a.refreshState()
     }
-    /**
-     * 当什么什么发生改变会调用？
-     */
-//    func applicationDidChangeOcclusionState(_ notification: Notification) {
-//        if (NSApp.occlusionState.contains(.visible)) {
-//            // the app now became visible
-//            appController.refreshState()
-//        } else {
-//            // none of the app is visible anymore, so pause everything
-//            appController.deactivate()
-//        }
-//    }
-
 }
 

@@ -49,7 +49,7 @@
         </customObject>
         <menu id="Ly6-M4-7kg">
             <items>
-                <menuItem title="开始计时" keyEquivalent="s" id="W7v-A4-pkM">
+                <menuItem title="开始番茄钟" keyEquivalent="s" id="W7v-A4-pkM">
                     <connections>
                         <action selector="startWork:" target="Hfz-ZN-Q92" id="HxH-Fc-cav"/>
                     </connections>
