@@ -122,9 +122,10 @@ class TrackerController: NSObject {
         }
         let minutesRemaining = floor(timeRemaining / 60)
         let secondsRemaining = timeRemaining - (minutesRemaining * 60)
-        
+        print(secondsRemaining)
+        let minutesDisplay = String(format: "%02d", Int(minutesRemaining))
         let secondsDisplay = String(format: "%02d", Int(secondsRemaining))
-        timeRemainingDisplay = "\(Int(minutesRemaining)):\(secondsDisplay)"
+        timeRemainingDisplay = "\(minutesDisplay):\(secondsDisplay)"
         
         return timeRemainingDisplay
     }
