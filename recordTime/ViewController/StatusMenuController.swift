@@ -13,6 +13,8 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     let userNotificationCenter = NSUserNotificationCenter.default
     var frontmostApplication: NSRunningApplication?
+    let restIcon = NSImage(named: NSImage.Name(rawValue: "rest"))
+    let workIcon = NSImage(named: NSImage.Name(rawValue: "work"))
     // 提供数据源
     @IBOutlet weak var trackerModel: TrackerController!
     // MARK: IB
@@ -33,9 +35,9 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         userNotificationCenter.delegate = self
         
         if let button = statusItem.button {
-            let icon = NSImage(named: NSImage.Name(rawValue: "icon"))
-            icon?.isTemplate = true
-            button.image = icon
+            
+            workIcon?.isTemplate = true
+            button.image = workIcon
 //            button.action = #selector(test)
         }
         statusItem.menu = statusMenu
@@ -115,6 +117,8 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     func startRest() {
         trackerModel.startRest()
+        restIcon?.isTemplate = true
+        statusItem.button?.image = restIcon
 //        showModal()
         openUrl()
     }

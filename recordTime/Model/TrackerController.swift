@@ -115,14 +115,12 @@ class TrackerController: NSObject {
      * 格式化时间
      */
     private func formatTimeString(for timeRemaining: TimeInterval) -> String {
-        // print(timeRemaining == 0, timeRemaining == -0)
         var timeRemainingDisplay: String = ""
         if timeRemaining == 0 {
             return timeRemainingDisplay
         }
         let minutesRemaining = floor(timeRemaining / 60)
         let secondsRemaining = timeRemaining - (minutesRemaining * 60)
-        print(secondsRemaining)
         let minutesDisplay = String(format: "%02d", Int(minutesRemaining))
         let secondsDisplay = String(format: "%02d", Int(secondsRemaining))
         timeRemainingDisplay = "\(minutesDisplay):\(secondsDisplay)"
