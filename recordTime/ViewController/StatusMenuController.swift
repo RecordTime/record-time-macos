@@ -12,6 +12,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     // 增加状态栏图标
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     let userNotificationCenter = NSUserNotificationCenter.default
+    var frontmostApplication: NSRunningApplication?
     // 提供数据源
     @IBOutlet weak var trackerModel: TrackerController!
     // MARK: IB
@@ -38,10 +39,16 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         }
         statusItem.menu = statusMenu
         trackerModel.subscribe(onTimeUpdate: callback)
+//        print(NSWorkspace.shared.runningApplications)
     }
     private func callback(seconds: TimeInterval) {
         print("tick", seconds)
         if trackerModel.isWorking {
+            let activeApplication = NSWorkspace.shared.menuBarOwningApplication
+            if activeApplication?.localizedName == "企业微信" && !(activeApplication?.isHidden)! {
+                print("hide active application")
+                activeApplication?.hide()
+            }
             if seconds <= 0 {
                 stopWork()
                 startRest()
@@ -87,31 +94,18 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     func startRest() {
         trackerModel.startRest()
-        showModal()
+//        showModal()
+        openUrl()
+    }
+    func openUrl() {
+        if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.12"), NSWorkspace.shared.open(url) {
+            print("default browser was successfully opened")
+        }
     }
     func showModal() {
         let settingsWindowController = NSWindowController.init(window: modalView)
-//        settingsWindowController.center()
-//        settingsWindowController.toggleFullScreen(nil)
         modalView.setIsZoomed(true)
-//        modalView.isFloatingPanel = true
-//        modalView.worksWhenModal = true
-//        modalView.frame = NSRect(dictionaryRepresentation: <#T##CFDictionary#>)
         settingsWindowController.showWindow(nil)
-//        settingsWindowController.toggleFullScreen(nil)
-//        settingsWindowController.makeKey()
-//
-//        modalView.toggleFullScreen(nil)
-        // bring settings window to front
-//        let frame = CGRect(x: 0, y: 0, width: 400, height: 280)
-//        let style: NSWindow.StyleMask = [.titled,.closable,.resizable,.hudWindow,.fullScreen]
-//        //创建window
-//        myWindow = NSWindow(contentRect:frame, styleMask:style, backing:.buffered, defer:false)
-//        myWindow.title = "New Create Window"
-//        //显示window
-//        myWindow.makeKeyAndOrderFront(self);
-//        //居中
-//        myWindow.center()
         NSApp.activate(ignoringOtherApps: true)
     }
     func stopRest() {

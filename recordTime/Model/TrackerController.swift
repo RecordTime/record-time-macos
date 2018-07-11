@@ -15,7 +15,7 @@ class TrackerController: NSObject {
     var endTime: Date?
     var workTimer: Timer? = nil
 //    var duration: TimeInterval = 1500
-    var duration: TimeInterval = 1
+    var duration: TimeInterval = 10
     // MARK: 休息相关属性
     var startRestTime: Date?
     var endRestTime: Date?
