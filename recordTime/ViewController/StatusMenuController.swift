@@ -92,12 +92,11 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         }
     }
     func blockApplications() {
-        print(blockSetting)
         if (blockSetting == false) {
             return
         }
         let activeApplication = NSWorkspace.shared.menuBarOwningApplication
-        if activeApplication?.localizedName == "企业微信" && !(activeApplication?.isHidden)! {
+        if activeApplication?.localizedName == "企业微信" && activeApplication?.isHidden == false {
             activeApplication?.hide()
         }
     }
