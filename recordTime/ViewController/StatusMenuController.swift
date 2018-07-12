@@ -15,12 +15,21 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     var frontmostApplication: NSRunningApplication?
     let restIcon = NSImage(named: NSImage.Name(rawValue: "rest"))
     let workIcon = NSImage(named: NSImage.Name(rawValue: "work"))
+    var blockSetting = true
     // 提供数据源
     @IBOutlet weak var trackerModel: TrackerController!
     // MARK: IB
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var startMenuItem: NSMenuItem!
-    
+    @IBOutlet weak var cancelBlockMenuItem: NSMenuItem!
+    @IBAction func cancelBlock(_ sender: Any) {
+        if blockSetting == true {
+            blockSetting = false
+        } else {
+            blockSetting = true
+        }
+        cancelBlockMenuItem.title = "恢复屏蔽"
+    }
     @IBAction func exitRest(_ sender: Any) {
     }
     @IBOutlet weak var settingsWindow: NSWindow!
@@ -60,14 +69,24 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         self.windowDidBecomeMain(notification)
         print("becom main")
     }
+    func resetBlockSetting() {
+        blockSetting = true
+        cancelBlockMenuItem.title = "解除屏蔽"
+    }
+    func blockApplications() {
+        print(blockSetting)
+        if (blockSetting == false) {
+            return
+        }
+        let activeApplication = NSWorkspace.shared.menuBarOwningApplication
+        if activeApplication?.localizedName == "企业微信" && !(activeApplication?.isHidden)! {
+            activeApplication?.hide()
+        }
+    }
     private func callback(seconds: TimeInterval) {
         print("tick", seconds)
         if trackerModel.isWorking {
-            let activeApplication = NSWorkspace.shared.menuBarOwningApplication
-            if activeApplication?.localizedName == "企业微信" && !(activeApplication?.isHidden)! {
-                print("hide active application")
-                activeApplication?.hide()
-            }
+            blockApplications()
             if seconds <= 0 {
                 stopWork()
                 startRest()
@@ -111,6 +130,8 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     func startWork() {
         trackerModel.startWork()
+        resetBlockSetting()
+        statusItem.button?.image = workIcon
     }
     func stopWork() {
         trackerModel.stopWork()
@@ -126,7 +147,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         trackerModel.stopRest()
     }
     func openUrl() {
-        if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.12"), NSWorkspace.shared.open(url) {
+        if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.13"), NSWorkspace.shared.open(url) {
             print("default browser was successfully opened")
         }
     }

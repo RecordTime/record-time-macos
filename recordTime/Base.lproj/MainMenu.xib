@@ -32,6 +32,7 @@
         </customObject>
         <customObject id="Hfz-ZN-Q92" customClass="StatusMenuController" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="cancelBlockMenuItem" destination="UaQ-wM-fJN" id="eJe-2o-7m7"/>
                 <outlet property="modalView" destination="0sv-fi-PhT" id="yV2-6d-NuF"/>
                 <outlet property="recorderWindow" destination="ZRK-eW-YLr" id="cQX-Uz-cLK"/>
                 <outlet property="settingsWindow" destination="ZdU-Vg-evI" id="cTe-im-icN"/>
@@ -52,6 +53,12 @@
                 <menuItem title="开始番茄钟" keyEquivalent="s" id="W7v-A4-pkM">
                     <connections>
                         <action selector="startWork:" target="Hfz-ZN-Q92" id="HxH-Fc-cav"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="解除屏蔽" id="UaQ-wM-fJN">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="cancelBlock:" target="Hfz-ZN-Q92" id="Lw8-vN-vYH"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="xeX-S6-dS5"/>
