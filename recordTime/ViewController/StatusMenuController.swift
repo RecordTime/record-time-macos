@@ -53,6 +53,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         trackerModel.subscribe(onTimeUpdate: callback)
         trackerModel.statusChanged = updateMenu
 //        print(NSWorkspace.shared.runningApplications)
+        registerScreenStatusNotify()
     }
 //    @objc func test() {
 //        print("click btn")
@@ -72,6 +73,23 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     func resetBlockSetting() {
         blockSetting = true
         cancelBlockMenuItem.title = "解除屏蔽"
+    }
+    func registerScreenStatusNotify() {
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(self.recieveSleepNotification), name: NSWorkspace.screensDidSleepNotification, object:  nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(self.recieveSleepNotification), name: NSWorkspace.screensDidWakeNotification, object: nil)
+    }
+    @objc func recieveSleepNotification(notification: NSNotification) {
+        if (notification.name == NSWorkspace.screensDidSleepNotification) {
+//            self.statusType = .sleep
+            print("sleep")
+            stopRest()
+            stopWork()
+            
+        }
+        if (notification.name == NSWorkspace.screensDidWakeNotification) {
+//            self.statusType = .wakeup
+            print("wakeup")
+        }
     }
     func blockApplications() {
         print(blockSetting)
@@ -135,6 +153,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     func stopWork() {
         trackerModel.stopWork()
+        statusItem.title = nil
     }
     func startRest() {
         trackerModel.startRest()
@@ -145,6 +164,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     func stopRest() {
         trackerModel.stopRest()
+        statusItem.title = nil
     }
     func openUrl() {
         if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.13"), NSWorkspace.shared.open(url) {
@@ -183,13 +203,13 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         if trackerModel.isWorking {
             stopWork()
             updateMenu()
-            statusItem.title = nil
+//            statusItem.title = nil
             return
         }
         if trackerModel.isResting {
             stopRest()
             updateMenu()
-            statusItem.title = nil
+//            statusItem.title = nil
             return
         }
         if trackerModel.isStop {
