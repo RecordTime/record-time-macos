@@ -13,25 +13,30 @@ class BlockedSettingsViewController: NSViewController, NSWindowDelegate {
     
     var datas = [NSDictionary]()
     var selectedApplication = [String]()
+    var hasChangedSettings: Bool = false
     
     @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var settingsSaved: NSButton!
     
     func windowDidBecomeMain(_ notification: Notification) {
         // print("once")
+        self.datas = []
+        selectedApplication = defaults.array(forKey: "blocked") as! [String]
         self.updateData()
         tableView.reloadData()
     }
     @IBAction func saveBlockSettings(_ sender: Any) {
-        print(self.selectedApplication)
+//        print(self.selectedApplication)
+        defaults.set(self.selectedApplication, forKey: "blocked")
+        defaults.synchronize()
+        settingsSaved.isEnabled = false
     }
     @IBAction func applicationSelected(_ sender: NSButton) {
         let index = tableView.row(for: sender)
         let state = sender.state
         let item = self.datas[index]
         let name = item.value(forKey: "application")
-        print(item, state)
         let appIndex = self.selectedApplication.index(of: name as! String)
-        print(appIndex)
         // 保存
         if state.rawValue == 1 && appIndex == nil {
             self.selectedApplication.append(name as! String)
@@ -40,11 +45,15 @@ class BlockedSettingsViewController: NSViewController, NSWindowDelegate {
         if state.rawValue == 0 && appIndex != nil {
             self.selectedApplication.remove(at: appIndex!)
         }
+        settingsSaved.isEnabled = true
     }
     func updateData() {
 //        try! print(FileManager().contentsOfDirectory(atPath: "/Applications"))
         for app in NSWorkspace.shared.runningApplications {
-            self.datas.append(["blocked": 0, "application": app.localizedName, "icon": app.icon])
+            let index = self.selectedApplication.index(of: app.localizedName!)
+            let blocked = index != nil ? 1 : 0
+            print(app.localizedName, index, blocked)
+            self.datas.append(["blocked": blocked, "application": app.localizedName, "icon": app.icon])
         }
     }
     

@@ -16,6 +16,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     let restIcon = NSImage(named: NSImage.Name(rawValue: "rest"))
     let workIcon = NSImage(named: NSImage.Name(rawValue: "work"))
     var blockSetting = true
+    let defaults = UserDefaults.standard
     // 提供数据源
     @IBOutlet weak var trackerModel: TrackerController!
     // MARK: IB
@@ -102,9 +103,14 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         if (blockSetting == false) {
             return
         }
+        let blocked = defaults.array(forKey: "blocked") as! [String]
         let activeApplication = NSWorkspace.shared.menuBarOwningApplication
-        if activeApplication?.localizedName == "企业微信" && activeApplication?.isHidden == false {
-            activeApplication?.hide()
+        let name = activeApplication?.localizedName
+        if name != nil {
+            let index = blocked.index(of: name!)
+            if index != nil && activeApplication?.isHidden == false {
+                activeApplication?.hide()
+            }
         }
     }
     private func callback(seconds: TimeInterval) {
@@ -130,7 +136,6 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         updateMenuTitle(title: trackerModel.timeRemainingDisplay)
     }
     private func updateMenuTitle(title: String) {
-        let defaults = UserDefaults.standard
         let keys = SettingsKeys()
         let showSeconds = defaults.bool(forKey: keys.SHOW_TIME)
         if showSeconds == false {
