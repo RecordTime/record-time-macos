@@ -80,6 +80,7 @@
 		8EBB9FD320F1F4D200B670BE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8ECA668420F241F100389B35 /* SettingsController.swift */,
 				8ECA666B20F1FDF200389B35 /* StatusMenuController.swift */,
 				8ECA668620F2572C00389B35 /* RecorderViewController.swift */,
 				8E99639920F50EC300E33BF0 /* ModalViewController.swift */,
@@ -92,7 +93,6 @@
 			isa = PBXGroup;
 			children = (
 				8ECA668220F23EC400389B35 /* TrackerController.swift */,
-				8ECA668420F241F100389B35 /* SettingsController.swift */,
 				8ECA668820F25E7800389B35 /* RecordController.swift */,
 			);
 			path = Model;

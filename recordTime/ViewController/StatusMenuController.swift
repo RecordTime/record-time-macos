@@ -130,12 +130,20 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         updateMenuTitle(title: trackerModel.timeRemainingDisplay)
     }
     private func updateMenuTitle(title: String) {
+        let defaults = UserDefaults.standard
+        let keys = SettingsKeys()
+        let showSeconds = defaults.bool(forKey: keys.SHOW_TIME)
+        if showSeconds == false {
+            if statusItem.title != nil {
+                statusItem.title = nil
+            }
+            return
+        }
         let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Gill Sans", size: 14.0)!]
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
     }
     func updateMenu() {
-        print("update menu", trackerModel.isWorking, trackerModel.isResting, trackerModel.isStop)
         if trackerModel.isWorking {
             startMenuItem.title = "结束番茄钟"
             return

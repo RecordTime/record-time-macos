@@ -22,12 +22,8 @@
         <customObject id="s3M-JA-h5O" customClass="TrackerController" customModule="recordTime" customModuleProvider="target"/>
         <customObject id="KXF-Lt-6NO" customClass="SettingsController" customModule="recordTime" customModuleProvider="target">
             <connections>
-                <outlet property="showAMPMBox" destination="LBK-l1-PjW" id="HEe-WT-Byd"/>
-                <outlet property="showDateBox" destination="nf8-RN-CPl" id="7qD-IT-Rew"/>
-                <outlet property="showDayOfWeekBox" destination="qaO-JI-Z0X" id="X0Y-GK-rRM"/>
-                <outlet property="showSecondsBox" destination="VcS-FE-FrN" id="Jkc-uI-5Ya"/>
+                <outlet property="showSecondsBox" destination="VcS-FE-FrN" id="vnL-xa-ss3"/>
                 <outlet property="trackerController" destination="s3M-JA-h5O" id="cex-qk-0Av"/>
-                <outlet property="use24HoursBox" destination="1yI-VY-7d7" id="jgV-hg-zcl"/>
             </connections>
         </customObject>
         <customObject id="Hfz-ZN-Q92" customClass="StatusMenuController" customModule="recordTime" customModuleProvider="target">
@@ -95,45 +91,12 @@
                     <button fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="VcS-FE-FrN">
                         <rect key="frame" x="184" y="207" width="220" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Show the time with seconds" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="r3O-ZY-iFF">
+                        <buttonCell key="cell" type="check" title="在状态栏显示时间" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="r3O-ZY-iFF">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
                         </buttonCell>
                         <connections>
-                            <action selector="checkBoxClicked:" target="KXF-Lt-6NO" id="d0p-Zj-ALq"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="1yI-VY-7d7">
-                        <rect key="frame" x="184" y="175" width="220" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Use a 24-hour clock" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="w4Z-WU-F5z">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="checkBoxClicked:" target="KXF-Lt-6NO" id="G2Y-Jt-0fn"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="LBK-l1-PjW">
-                        <rect key="frame" x="184" y="143" width="220" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Show AM/PM" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="btl-Iv-3Ch">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="checkBoxClicked:" target="KXF-Lt-6NO" id="sqA-xd-ekY"/>
-                        </connections>
-                    </button>
-                    <button fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="nf8-RN-CPl">
-                        <rect key="frame" x="184" y="79" width="220" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Show date" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FuR-gN-riZ">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="checkBoxClicked:" target="KXF-Lt-6NO" id="Z89-cy-37j"/>
+                            <action selector="checkBoxClicked:" target="KXF-Lt-6NO" id="hR8-YJ-x3S"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xuR-dZ-e2N">
@@ -145,26 +108,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zz7-nK-DtP">
-                        <rect key="frame" x="76" y="81" width="93" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Date options" usesSingleLineMode="YES" id="SvM-4N-K8o">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="qaO-JI-Z0X">
-                        <rect key="frame" x="184" y="47" width="220" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Show the day of the week" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gEb-HI-wLo">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="checkBoxClicked:" target="KXF-Lt-6NO" id="lsC-RR-qFl"/>
-                        </connections>
-                    </button>
                 </subviews>
             </view>
             <connections>
