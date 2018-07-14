@@ -9,20 +9,37 @@
 import Cocoa
 
 class BlockedSettingsViewController: NSViewController, NSWindowDelegate {
-    @IBOutlet weak var table: NSWindow!
+    let defaults: UserDefaults! = UserDefaults.standard
+    
+    var datas = [NSDictionary]()
+    var selectedApplication = [String]()
     
     @IBOutlet weak var tableView: NSTableView!
-    var datas = [NSDictionary]()
+    
     func windowDidBecomeMain(_ notification: Notification) {
         // print("once")
         self.updateData()
         tableView.reloadData()
     }
+    @IBAction func saveBlockSettings(_ sender: Any) {
+        print(self.selectedApplication)
+    }
     @IBAction func applicationSelected(_ sender: NSButton) {
         let index = tableView.row(for: sender)
         let state = sender.state
         let item = self.datas[index]
+        let name = item.value(forKey: "application")
         print(item, state)
+        let appIndex = self.selectedApplication.index(of: name as! String)
+        print(appIndex)
+        // 保存
+        if state.rawValue == 1 && appIndex == nil {
+            self.selectedApplication.append(name as! String)
+        }
+        // 移除
+        if state.rawValue == 0 && appIndex != nil {
+            self.selectedApplication.remove(at: appIndex!)
+        }
     }
     func updateData() {
 //        try! print(FileManager().contentsOfDirectory(atPath: "/Applications"))

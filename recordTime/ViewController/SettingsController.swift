@@ -55,7 +55,6 @@ class SettingsController: NSObject, NSWindowDelegate {
         // checkboxes use tags starting from 1
         if (sender.tag > 0 && sender.tag <= keysToViewMap.count) {
             let key = keysToViewMap[sender.tag - 1]
-            print(key, sender.state)
             defaults.set(sender.state == .on, forKey: key)
             defaults.synchronize()
             
