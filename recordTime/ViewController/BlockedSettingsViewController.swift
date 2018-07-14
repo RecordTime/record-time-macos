@@ -8,21 +8,16 @@
 
 import Cocoa
 
-class BlockedSettingsViewController: NSViewController {
+class BlockedSettingsViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var table: NSWindow!
     
     @IBOutlet weak var tableView: NSTableView!
     var datas = [NSDictionary]()
-    override func awakeFromNib() {
-        super.viewDidLoad()
-        // Do view setup here.
-        print("did load")
+    func windowDidBecomeMain(_ notification: Notification) {
+        // print("once")
         self.updateData()
+        tableView.reloadData()
     }
-    override func viewWillAppear() {
-        print("will appeare")
-    }
-    
     @IBAction func applicationSelected(_ sender: NSButton) {
         let index = tableView.row(for: sender)
         let state = sender.state
