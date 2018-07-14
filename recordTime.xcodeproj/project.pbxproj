@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E99639A20F50EC300E33BF0 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99639920F50EC300E33BF0 /* ModalViewController.swift */; };
+		8E99639C20F9D19100E33BF0 /* BlockedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99639B20F9D19100E33BF0 /* BlockedSettingsViewController.swift */; };
 		8EBB9FC620F1F4C600B670BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB9FC520F1F4C600B670BE /* AppDelegate.swift */; };
 		8EBB9FC820F1F4C700B670BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9FC720F1F4C700B670BE /* Assets.xcassets */; };
 		8EBB9FCB20F1F4C700B670BE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB9FC920F1F4C700B670BE /* MainMenu.xib */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		8E99639920F50EC300E33BF0 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		8E99639B20F9D19100E33BF0 /* BlockedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedSettingsViewController.swift; sourceTree = "<group>"; };
 		8EBB9FC220F1F4C600B670BE /* recordTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = recordTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EBB9FC520F1F4C600B670BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EBB9FC720F1F4C700B670BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				8ECA666B20F1FDF200389B35 /* StatusMenuController.swift */,
 				8ECA668620F2572C00389B35 /* RecorderViewController.swift */,
 				8E99639920F50EC300E33BF0 /* ModalViewController.swift */,
+				8E99639B20F9D19100E33BF0 /* BlockedSettingsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			files = (
 				8ECA668920F25E7800389B35 /* RecordController.swift in Sources */,
 				8ECA668520F241F100389B35 /* SettingsController.swift in Sources */,
+				8E99639C20F9D19100E33BF0 /* BlockedSettingsViewController.swift in Sources */,
 				8ECA666C20F1FDF200389B35 /* StatusMenuController.swift in Sources */,
 				8ECA668320F23EC400389B35 /* TrackerController.swift in Sources */,
 				8EBB9FC620F1F4C600B670BE /* AppDelegate.swift in Sources */,

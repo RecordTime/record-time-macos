@@ -32,10 +32,17 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     @IBAction func exitRest(_ sender: Any) {
     }
+    @IBAction func openBlockList(_ sender: Any) {
+        let settingsWindowController = NSWindowController.init(window: blockedSettingsWindow)
+        settingsWindowController.showWindow(sender)
+        // bring settings window to front
+        NSApp.activate(ignoringOtherApps: true)
+    }
     @IBOutlet weak var settingsWindow: NSWindow!
     @IBOutlet weak var recorderWindow: NSWindow!
-    
+    @IBOutlet weak var blockedSettingsWindow: NSWindow!
     @IBOutlet weak var modalView: NSPanel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -159,14 +166,14 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         restIcon?.isTemplate = true
         statusItem.button?.image = restIcon
 //        showModal()
-        openUrl()
+        // openUrl()
     }
     func stopRest() {
         trackerModel.stopRest()
         statusItem.title = nil
     }
     func openUrl() {
-        if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.13"), NSWorkspace.shared.open(url) {
+        if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.16"), NSWorkspace.shared.open(url) {
             print("default browser was successfully opened")
         }
     }

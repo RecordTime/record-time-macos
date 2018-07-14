@@ -32,6 +32,7 @@
         </customObject>
         <customObject id="Hfz-ZN-Q92" customClass="StatusMenuController" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="blockedSettingsWindow" destination="75N-Fw-pjl" id="bbq-Be-xsU"/>
                 <outlet property="cancelBlockMenuItem" destination="UaQ-wM-fJN" id="eJe-2o-7m7"/>
                 <outlet property="modalView" destination="0sv-fi-PhT" id="yV2-6d-NuF"/>
                 <outlet property="recorderWindow" destination="ZRK-eW-YLr" id="cQX-Uz-cLK"/>
@@ -62,6 +63,12 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="xeX-S6-dS5"/>
+                <menuItem title="配置屏蔽名单" id="GBM-ap-bMT">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openBlockList:" target="Hfz-ZN-Q92" id="1Ls-X6-hED"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="设置" keyEquivalent="," id="6AF-8A-Xli">
                     <connections>
                         <action selector="openSettings:" target="Hfz-ZN-Q92" id="o8r-Sz-xJ8"/>
@@ -255,6 +262,96 @@
                 <outlet property="delegate" destination="WZo-HW-FPJ" id="Ur0-T5-lhe"/>
             </connections>
             <point key="canvasLocation" x="-91" y="-378"/>
+        </window>
+        <customObject id="oy1-6o-ZGl" customClass="BlockedSettingsViewController" customModule="recordTime" customModuleProvider="target">
+            <connections>
+                <outlet property="table" destination="75N-Fw-pjl" id="LRl-c9-Izf"/>
+                <outlet property="tableView" destination="xyh-uF-tPi" id="C6X-4d-Cyh"/>
+            </connections>
+        </customObject>
+        <window title="配置屏蔽列表" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="75N-Fw-pjl">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="131" y="158" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" id="ZRI-xj-8aL">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NcK-j3-KoU">
+                        <rect key="frame" x="-1" y="55" width="482" height="214"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" ambiguous="YES" id="hR3-IT-Ayu">
+                            <rect key="frame" x="1" y="23" width="480" height="190"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="rU3-xB-0Kp" id="xyh-uF-tPi">
+                                    <rect key="frame" x="0.0" y="0.0" width="480" height="190"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn identifier="blocked" width="62" minWidth="40" maxWidth="1000" id="Dnd-Yy-YPd">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Blocked">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="left" inset="2" id="d7M-ac-3Tx">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        </tableColumn>
+                                        <tableColumn identifier="applications" width="412" minWidth="40" maxWidth="1000" id="miX-co-1E0">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Applications">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="c2l-ql-qE3">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        </tableColumn>
+                                    </tableColumns>
+                                    <connections>
+                                        <outlet property="dataSource" destination="oy1-6o-ZGl" id="vbo-H8-xVJ"/>
+                                        <outlet property="delegate" destination="oy1-6o-ZGl" id="mir-8a-46D"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="3tT-Rg-rKF">
+                            <rect key="frame" x="1" y="197" width="480" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="dcm-y2-D2d">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <tableHeaderView key="headerView" id="rU3-xB-0Kp">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="23"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </tableHeaderView>
+                    </scrollView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lar-3B-FZv">
+                        <rect key="frame" x="207" y="13" width="67" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="保存" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GII-VX-jlS">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        </buttonCell>
+                    </button>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="oy1-6o-ZGl" id="9dp-Im-52f"/>
+            </connections>
+            <point key="canvasLocation" x="693" y="368"/>
         </window>
     </objects>
 </document>
