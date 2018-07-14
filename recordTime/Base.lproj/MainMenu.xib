@@ -315,6 +315,9 @@
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
+                                                            <connections>
+                                                                <action selector="applicationSelected:" target="oy1-6o-ZGl" id="Xgg-Wt-4U7"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -380,7 +383,7 @@
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="pXJ-nt-VQ1">
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="pXJ-nt-VQ1">
                             <rect key="frame" x="1" y="416" width="358" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>

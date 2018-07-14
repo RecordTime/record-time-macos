@@ -23,6 +23,12 @@ class BlockedSettingsViewController: NSViewController {
         print("will appeare")
     }
     
+    @IBAction func applicationSelected(_ sender: NSButton) {
+        let index = tableView.row(for: sender)
+        let state = sender.state
+        let item = self.datas[index]
+        print(item, state)
+    }
     func updateData() {
 //        try! print(FileManager().contentsOfDirectory(atPath: "/Applications"))
         for app in NSWorkspace.shared.runningApplications {
