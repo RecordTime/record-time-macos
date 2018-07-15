@@ -30,6 +30,8 @@
             <connections>
                 <outlet property="blockedSettingsWindow" destination="75N-Fw-pjl" id="bbq-Be-xsU"/>
                 <outlet property="cancelBlockMenuItem" destination="UaQ-wM-fJN" id="eJe-2o-7m7"/>
+                <outlet property="countdownBar" destination="qiJ-N8-jVn" id="7QN-d8-kKD"/>
+                <outlet property="countdownView" destination="myF-dy-xnD" id="QFZ-VS-dyh"/>
                 <outlet property="modalView" destination="0sv-fi-PhT" id="yV2-6d-NuF"/>
                 <outlet property="recorderWindow" destination="ZRK-eW-YLr" id="cQX-Uz-cLK"/>
                 <outlet property="settingsWindow" destination="ZdU-Vg-evI" id="cTe-im-icN"/>
@@ -285,7 +287,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="2P9-YS-DQx">
-                                                    <rect key="frame" x="61.5" y="1" width="360" height="17"/>
+                                                    <rect key="frame" x="62" y="1" width="360" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OSn-jv-hLY">
@@ -364,6 +366,31 @@
                 <outlet property="delegate" destination="oy1-6o-ZGl" id="9dp-Im-52f"/>
             </connections>
             <point key="canvasLocation" x="693" y="368"/>
+        </window>
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="myF-dy-xnD" customClass="NSPanel">
+            <windowStyleMask key="styleMask" utility="YES" HUD="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="402" y="789" width="770" height="57"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" id="6Qv-tF-aKF">
+                <rect key="frame" x="0.0" y="0.0" width="770" height="57"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xbL-3h-wnk">
+                        <rect key="frame" x="339" y="2" width="94" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="继续休息" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jtT-CN-cTd">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        </buttonCell>
+                    </button>
+                    <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="qiJ-N8-jVn">
+                        <rect key="frame" x="20" y="32" width="730" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </progressIndicator>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="817" y="755.5"/>
         </window>
     </objects>
     <resources>

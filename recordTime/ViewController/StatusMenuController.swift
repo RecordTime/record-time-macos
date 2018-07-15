@@ -20,6 +20,8 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     // 提供数据源
     @IBOutlet weak var trackerModel: TrackerController!
     // MARK: IB
+    @IBOutlet weak var countdownView: NSPanel!
+    @IBOutlet weak var countdownBar: NSProgressIndicator!
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var startMenuItem: NSMenuItem!
     @IBOutlet weak var cancelBlockMenuItem: NSMenuItem!
@@ -121,9 +123,16 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
                 stopWork()
                 startRest()
             }
+//            if seconds < 0 {
+//                hideCountdown()
+//            }
             if seconds == 10 {
                 sendRestMessage()
+//                showCountdown()
             }
+//            if seconds < 10 {
+//                updateCountdown(current: (10 - seconds) / 10 * 100)
+//            }
         } else {
             if seconds <= 0 {
                 stopRest()
@@ -214,6 +223,21 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
+    }
+    func showCountdown() {
+        let settingsWindowController = NSWindowController.init(window: countdownView)
+        settingsWindowController.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        countdownBar.startAnimation(self)
+    }
+    func updateCountdown(current: Double) {
+        countdownBar.doubleValue = current
+//        countdownBar.increment(by: current)
+        
+        
+    }
+    func hideCountdown() {
+        countdownView.close()
     }
     /**
      * 开始计时与结束计时
