@@ -26,8 +26,8 @@ class TrackerController: NSObject {
     var startRestTime: Date?
     var endRestTime: Date?
     var restTimer: Timer? = nil
-    var restDuration: TimeInterval = 300
-//    var restDuration: TimeInterval = 3
+//    var restDuration: TimeInterval = 300
+    var restDuration: TimeInterval = 60
     
     // 过去的秒数
     var elapsedTime: TimeInterval = 0
@@ -40,6 +40,7 @@ class TrackerController: NSObject {
     }
     // 时间变化回调
     var onTimeUpdate: ((TimeInterval) -> ())? = nil
+    var listeners: [(TimeInterval) -> ()] = []
     var statusChanged: (() -> ())? = nil
     
     @IBOutlet weak var modalWindow: NSWindow!
@@ -73,7 +74,9 @@ class TrackerController: NSObject {
         
         elapsedTime = -startTime.timeIntervalSinceNow
         secondsRemaining = (duration - elapsedTime).rounded()
-        self.onTimeUpdate?(secondsRemaining)
+        for listener in self.listeners {
+            listener(secondsRemaining)
+        }
     }
     func stopWork() {
         if workTimer != nil {
@@ -103,7 +106,10 @@ class TrackerController: NSObject {
         
         elapsedTime = -startTime.timeIntervalSinceNow
         secondsRemaining = (restDuration - elapsedTime).rounded()
-        self.onTimeUpdate?(secondsRemaining)
+//        self.onTimeUpdate?(secondsRemaining)
+        for listener in self.listeners {
+            listener(secondsRemaining)
+        }
     }
     func stopRest() {
         if restTimer != nil {
@@ -133,6 +139,6 @@ class TrackerController: NSObject {
      * 暴露给外部用以订阅的方法
      */
     func subscribe(onTimeUpdate: @escaping (TimeInterval) -> ()) {
-        self.onTimeUpdate = onTimeUpdate
+        self.listeners.append(onTimeUpdate)
     }
 }

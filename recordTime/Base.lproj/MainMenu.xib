@@ -181,6 +181,9 @@
         </window>
         <customObject id="WZo-HW-FPJ" customClass="ModalViewController" customModule="recordTime" customModuleProvider="target">
             <connections>
+                <outlet property="contentField" destination="eTg-o9-3NN" id="DKw-wI-Zl5"/>
+                <outlet property="time" destination="hiW-jO-pER" id="8wU-TN-12N"/>
+                <outlet property="trackerModel" destination="s3M-JA-h5O" id="B1H-D2-MGx"/>
                 <outlet property="view" destination="5qz-7R-idV" id="ygN-ML-7gD"/>
             </connections>
         </customObject>
@@ -195,7 +198,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggS-A1-1bu">
-                        <rect key="frame" x="209" y="28" width="62" height="32"/>
+                        <rect key="frame" x="209" y="52" width="62" height="32"/>
                         <buttonCell key="cell" type="push" title="exit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hhe-hD-cRR">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -204,9 +207,43 @@
                             <action selector="exit:" target="WZo-HW-FPJ" id="Tt5-Kv-kuH"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1h4-n6-tE5">
+                        <rect key="frame" x="207" y="86" width="67" height="32"/>
+                        <buttonCell key="cell" type="push" title="保存" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lmS-ki-YeH">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="saveRecord:" target="WZo-HW-FPJ" id="9kf-Le-QPS"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eTg-o9-3NN">
+                        <rect key="frame" x="200" y="147" width="80" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="120" id="Y25-aT-uC7"/>
+                        </constraints>
+                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="d0w-zy-WUv">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hiW-jO-pER">
+                        <rect key="frame" x="195" y="111" width="91" height="39"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="4jc-2u-xwl">
+                            <font key="font" size="32" name="HiraginoSans-W4"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ggS-A1-1bu" firstAttribute="centerX" secondItem="5qz-7R-idV" secondAttribute="centerX" id="0c3-Kk-Ajh"/>
+                    <constraint firstItem="eTg-o9-3NN" firstAttribute="leading" secondItem="5qz-7R-idV" secondAttribute="leading" constant="200" id="Gbe-eY-MTS"/>
+                    <constraint firstItem="ggS-A1-1bu" firstAttribute="centerX" secondItem="5qz-7R-idV" secondAttribute="centerX" id="LCp-UL-zYt"/>
+                    <constraint firstItem="hiW-jO-pER" firstAttribute="centerX" secondItem="5qz-7R-idV" secondAttribute="centerX" id="c9A-4j-8G7"/>
+                    <constraint firstItem="1h4-n6-tE5" firstAttribute="centerX" secondItem="5qz-7R-idV" secondAttribute="centerX" id="dzC-vD-PBW"/>
+                    <constraint firstAttribute="trailing" secondItem="eTg-o9-3NN" secondAttribute="trailing" constant="200" id="f5U-i4-8a6"/>
+                    <constraint firstItem="hiW-jO-pER" firstAttribute="top" secondItem="5qz-7R-idV" secondAttribute="top" constant="120" id="zdd-iK-Pqs"/>
                 </constraints>
             </view>
             <connections>
