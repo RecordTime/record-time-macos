@@ -19,14 +19,12 @@ class BlockedSettingsViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var settingsSaved: NSButton!
     
     func windowDidBecomeMain(_ notification: Notification) {
-        // print("once")
         self.datas = []
         selectedApplication = defaults.array(forKey: "blocked") as! [String]
         self.updateData()
         tableView.reloadData()
     }
     @IBAction func saveBlockSettings(_ sender: Any) {
-//        print(self.selectedApplication)
         defaults.set(self.selectedApplication, forKey: "blocked")
         defaults.synchronize()
         settingsSaved.isEnabled = false
@@ -52,7 +50,6 @@ class BlockedSettingsViewController: NSViewController, NSWindowDelegate {
         for app in NSWorkspace.shared.runningApplications {
             let index = self.selectedApplication.index(of: app.localizedName!)
             let blocked = index != nil ? 1 : 0
-            print(app.localizedName, index, blocked)
             self.datas.append(["blocked": blocked, "application": app.localizedName, "icon": app.icon])
         }
     }

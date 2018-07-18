@@ -9,6 +9,7 @@
 import Cocoa
 
 class ModalViewController: NSWindowController, NSWindowDelegate {
+    @IBOutlet weak var view: NSView!
     private var panel: NSPanel! {
         get {
             return (self.window as! NSPanel)
@@ -21,12 +22,6 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
 //        panel.isFloatingPanel = true
     }
     @IBAction func exit(_ sender: Any) {
-        print("关闭自己")
+        self.view.window?.close()
     }
-    //    override func windowWillEnterFullScreen() {
-//        print("enter fail")
-//    }
-//    override func windowDidFailToExitFullScreen() {
-//        print("fail")
-//    }
 }

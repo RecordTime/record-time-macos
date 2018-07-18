@@ -54,55 +54,36 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     override func awakeFromNib() {
         userNotificationCenter.delegate = self
-        
         if let button = statusItem.button {
-            
             workIcon?.isTemplate = true
             button.image = workIcon
-//            button.action = #selector(test)
         }
         statusItem.menu = statusMenu
         trackerModel.subscribe(onTimeUpdate: callback)
         trackerModel.statusChanged = updateMenu
-//        print(NSWorkspace.shared.runningApplications)
         registerScreenStatusNotify()
     }
-//    @objc func test() {
-//        print("click btn")
-//    }
-    override func viewWillLayout() {
-        self.viewWillLayout()
-        print("will layout")
-    }
-    override func viewWillAppear() {
-        self.viewWillAppear()
-        print("will appear")
-    }
-    func windowDidBecomeMain(_ notification: Notification) {
-        self.windowDidBecomeMain(notification)
-        print("becom main")
-    }
-    func resetBlockSetting() {
-        blockSetting = true
-        cancelBlockMenuItem.title = "解除屏蔽"
-    }
+    // 监听息屏
     func registerScreenStatusNotify() {
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(self.recieveSleepNotification), name: NSWorkspace.screensDidSleepNotification, object:  nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(self.recieveSleepNotification), name: NSWorkspace.screensDidWakeNotification, object: nil)
     }
     @objc func recieveSleepNotification(notification: NSNotification) {
         if (notification.name == NSWorkspace.screensDidSleepNotification) {
-//            self.statusType = .sleep
             print("sleep")
             stopRest()
             stopWork()
-            
         }
         if (notification.name == NSWorkspace.screensDidWakeNotification) {
-//            self.statusType = .wakeup
             print("wakeup")
         }
     }
+    // MARK: 恢复屏蔽状态
+    func resetBlockSetting() {
+        blockSetting = true
+        cancelBlockMenuItem.title = "解除屏蔽"
+    }
+    // 隐藏应用
     func blockApplications() {
         if (blockSetting == false) {
             return
@@ -117,6 +98,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             }
         }
     }
+    // 倒计时，最核心的事件，所有处理都是从这里判断
     private func callback(seconds: TimeInterval) {
         print("tick", seconds)
         if trackerModel.isWorking {
@@ -147,6 +129,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         }
         updateMenuTitle(title: trackerModel.timeRemainingDisplay)
     }
+    // 更新 StatusItem 上的时间
     private func updateMenuTitle(title: String) {
         let keys = SettingsKeys()
         let showSeconds = defaults.bool(forKey: keys.SHOW_TIME)
@@ -160,6 +143,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
     }
+    // 更新菜单上的文案
     func updateMenu() {
         if trackerModel.isWorking {
             startMenuItem.title = "结束番茄钟"
@@ -174,38 +158,41 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             return
         }
     }
-    @IBAction func menuItemClick(sender: AnyObject) {
-        print("click")
-    }
+    // 进入番茄时间
     func startWork() {
         trackerModel.startWork()
         resetBlockSetting()
         statusItem.button?.image = workIcon
     }
+    // 结束番茄时间
     func stopWork() {
         trackerModel.stopWork()
         statusItem.title = nil
     }
+    // 开始休息
     func startRest() {
         trackerModel.startRest()
         restIcon?.isTemplate = true
         statusItem.button?.image = restIcon
-//        showModal()
+        showModal()
         // openUrl()
     }
+    // 结束休息
     func stopRest() {
         trackerModel.stopRest()
         statusItem.title = nil
     }
+    // 打开指定网页
     func openUrl() {
         if let url = URL(string: "http://confluence.qunhequnhe.com/display/TB/NERV+2018.7.16"), NSWorkspace.shared.open(url) {
             print("default browser was successfully opened")
         }
     }
+    // 显示休息时的模态框
     func showModal() {
-        let settingsWindowController = NSWindowController.init(window: modalView)
+        let modalViewController = NSWindowController.init(window: modalView)
         modalView.setIsZoomed(true)
-        settingsWindowController.showWindow(nil)
+        modalViewController.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
     private func notify(title: String, description: String, stayCenter: Bool) {
