@@ -18,6 +18,7 @@ class SettingsController: NSObject, NSWindowDelegate {
     let keysToViewMap: [String]!
     let keys = SettingsKeys()
     
+    @IBOutlet weak var hookField: NSTextField!
     @IBOutlet weak var trackerController: TrackerController!
     override init() {
         // 用户配置
@@ -40,6 +41,8 @@ class SettingsController: NSObject, NSWindowDelegate {
         for i in 0...(boxMap.count - 1) {
             boxMap[i].state = defaults.bool(forKey: keysToViewMap[i]) ? .on : .off
         }
+        let hook = defaults.string(forKey: "webhook")
+        hookField.stringValue = hook == nil ? "" : hook!
         
         updateAMPMEnabled()
     }
@@ -62,6 +65,11 @@ class SettingsController: NSObject, NSWindowDelegate {
             // 配置用户设置
 //            calendarController.setDateFormat()
         }
+    }
+    @IBAction func saveHookUrl(_ sender: Any) {
+        let hook = hookField.stringValue
+        defaults.set(hook, forKey: "webhook")
+        defaults.synchronize()
     }
     
     

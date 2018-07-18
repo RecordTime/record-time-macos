@@ -12,10 +12,13 @@ import Cocoa
 let saveRecordUrl = "https://1851343155697899.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/record_time_dev/record/"
 
 class ModalViewController: NSWindowController, NSWindowDelegate {
+    let defaults: UserDefaults = UserDefaults.standard
+    
     @IBOutlet weak var view: NSView!
     @IBOutlet weak var time: NSTextField!
     @IBOutlet weak var trackerModel: TrackerController!
     @IBOutlet weak var contentField: NSTextField!
+    
     private var panel: NSPanel! {
         get {
             return (self.window as! NSPanel)
@@ -25,21 +28,28 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
     override func awakeFromNib() {
         print("awake")
         trackerModel.subscribe(onTimeUpdate: callback)
+        // 如果 webhook 不存在，就不显示输入框
+        let webhook = defaults.string(forKey: "webhook")!
+        if webhook != nil && webhook != "" {
+//            contentField.
+        }
     }
     func windowDidBecomeMain(_ notification: Notification) {
         print("window did load")
 //        trackerModel.subscribe(onTimeUpdate: callback)
     }
     private func callback(seconds: TimeInterval) {
-        print("rest tick", seconds)
+        print("rest tick", seconds, trackerModel.isResting)
         if trackerModel.isResting {
-            if seconds == 1 {
+            time.stringValue = trackerModel.timeRemainingDisplay
+            if seconds == 0 {
                 closeWindow("auto close")
             }
-            time.stringValue = trackerModel.timeRemainingDisplay
         }
     }
     func sendRecord(_ content: String) {
+        let webhook = defaults.string(forKey: "webhook")!
+        print("web hook", webhook)
         let startTime = String(
             CLongLong(
                 round(
@@ -58,7 +68,7 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
         let defaultConfigObject = URLSessionConfiguration.default
         //创建 session
         let session = URLSession(configuration: defaultConfigObject, delegate: nil, delegateQueue: OperationQueue.main)
-        let url = URL(string: saveRecordUrl)!
+        let url = URL(string: webhook)!
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -72,12 +82,16 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
         print("post success", data, response, err)
     }
     func closeWindow(_ content: String) {
-        sendRecord(content)
+        let webhook = defaults.string(forKey: "webhook")!
+        if webhook != nil && webhook != "" {
+            sendRecord(content)
+        }
+//        sendRecord(content)
         self.view.window?.close()
     }
     @IBAction func saveRecord(_ sender: Any) {
         let content = contentField.stringValue
-        sendRecord(content)
+        closeWindow(content)
     }
     @IBAction func exit(_ sender: Any) {
         closeWindow("click exit")
