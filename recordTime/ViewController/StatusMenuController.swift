@@ -8,6 +8,8 @@
 
 import Cocoa
 
+let   kServerBaseUrl = "https://1851343155697899.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/record_time/record/"
+
 class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, NSWindowDelegate {
     // 增加状态栏图标
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -121,6 +123,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             blockApplications()
             if seconds <= 0 {
                 stopWork()
+                sendRecord()
                 startRest()
             }
 //            if seconds < 0 {
@@ -238,6 +241,28 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     }
     func hideCountdown() {
         countdownView.close()
+    }
+    func sendRecord() {
+        //使⽤缺省对配置
+        let defaultConfigObject = URLSessionConfiguration.default
+        //创建 session
+        let session = URLSession(configuration: defaultConfigObject, delegate: nil, delegateQueue: OperationQueue.main)
+        let url = URL(string: kServerBaseUrl)!
+        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        let postData = post.data(using: String.Encoding.utf8)
+        request.httpBody = try! JSONSerialization.data(withJSONObject: ["starttime":"bar", "endtime":"baz", "content": "test"], options: [])
+//        let uploadTask = session.uploadTask(with: request, from: postData, completionHandler: {(data, response, error) -> Void in
+//            let responseStr = String(data: data!, encoding: String.Encoding.utf8)
+//            print("uploadTask data =\(String(describing: responseStr))")
+//
+//        })
+        let task = session.dataTask(with: request as URLRequest, completionHandler: completionHandler)
+        task.resume()
+    }
+    func completionHandler(data: Data?, response: URLResponse?, err: Error?) {
+        print("post success")
     }
     /**
      * 开始计时与结束计时
