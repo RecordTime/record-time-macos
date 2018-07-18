@@ -242,7 +242,32 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     func hideCountdown() {
         countdownView.close()
     }
+    func toString(dateFormat:String, time: Date) -> String {
+        
+        let dateFormatter:DateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = dateFormat
+        
+        let formattedDatetimeStr:String = dateFormatter.string(from: time)
+        
+        return formattedDatetimeStr
+        
+    }
     func sendRecord() {
+        let startTime = String(
+            CLongLong(
+                round(
+                    (trackerModel.startTime?.timeIntervalSince1970)! * 1000
+                )
+            )
+        )
+        let endTime = String(
+            CLongLong(
+                round(
+                    (trackerModel.endTime?.timeIntervalSince1970)! * 1000
+                )
+            )
+        )
         //使⽤缺省对配置
         let defaultConfigObject = URLSessionConfiguration.default
         //创建 session
@@ -251,18 +276,14 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        let postData = post.data(using: String.Encoding.utf8)
-        request.httpBody = try! JSONSerialization.data(withJSONObject: ["starttime":"bar", "endtime":"baz", "content": "test"], options: [])
-//        let uploadTask = session.uploadTask(with: request, from: postData, completionHandler: {(data, response, error) -> Void in
-//            let responseStr = String(data: data!, encoding: String.Encoding.utf8)
-//            print("uploadTask data =\(String(describing: responseStr))")
-//
-//        })
+        let data = ["starttime": startTime, "endtime": endTime, "content": ""] as [String : Any]
+        print(data);
+        request.httpBody = try! JSONSerialization.data(withJSONObject: data, options: [])
         let task = session.dataTask(with: request as URLRequest, completionHandler: completionHandler)
         task.resume()
     }
     func completionHandler(data: Data?, response: URLResponse?, err: Error?) {
-        print("post success")
+        print("post success", data, response, err)
     }
     /**
      * 开始计时与结束计时
