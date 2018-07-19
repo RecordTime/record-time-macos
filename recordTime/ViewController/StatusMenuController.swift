@@ -28,10 +28,11 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     @IBAction func cancelBlock(_ sender: Any) {
         if blockSetting == true {
             blockSetting = false
+            cancelBlockMenuItem.title = "恢复屏蔽"
         } else {
             blockSetting = true
+            cancelBlockMenuItem.title = "解除屏蔽"
         }
-        cancelBlockMenuItem.title = "恢复屏蔽"
     }
     @IBAction func exitRest(_ sender: Any) {
     }
