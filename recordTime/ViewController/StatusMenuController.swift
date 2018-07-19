@@ -71,6 +71,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             print("sleep")
             stopRest()
             stopWork()
+            trackerModel.emit(event: "sleep")
         }
         if (notification.name == NSWorkspace.screensDidWakeNotification) {
             print("wakeup")
@@ -243,6 +244,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     @IBAction func startWork(_ sender: Any) {
         if trackerModel.isWorking {
             stopWork()
+            trackerModel.emit(event: "break")
             updateMenu()
 //            statusItem.title = nil
             return

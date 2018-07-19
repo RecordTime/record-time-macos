@@ -8,8 +8,8 @@
 
 import Cocoa
 
-//let   kServerBaseUrl = "https://1851343155697899.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/record_time/record/"
-let saveRecordUrl = "https://1851343155697899.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/record_time_dev/record/"
+let saveRecordUrl = "https://1851343155697899.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/record_time/record/"
+let dev_saveRecordUrl = "https://1851343155697899.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/record_time_dev/record/"
 
 class ModalViewController: NSWindowController, NSWindowDelegate {
     let defaults: UserDefaults = UserDefaults.standard
@@ -28,11 +28,12 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
     override func awakeFromNib() {
         print("awake")
         trackerModel.subscribe(onTimeUpdate: callback)
+        trackerModel.on(event: "sleep", cb: closeWindow)
+        trackerModel.on(event: "break", cb: closeWindow)
         // 如果 webhook 不存在，就不显示输入框
-        let webhook = defaults.string(forKey: "webhook")!
-        if webhook != nil && webhook != "" {
-//            contentField.
-        }
+//        let webhook = defaults.string(forKey: "webhook")!
+//        if webhook != nil && webhook != "" {
+//        }
     }
     func windowDidBecomeMain(_ notification: Notification) {
         print("window did load")

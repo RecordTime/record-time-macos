@@ -33,6 +33,7 @@ class TrackerController: NSObject {
     var elapsedTime: TimeInterval = 0
     // 剩余的秒数
     var secondsRemaining: TimeInterval = 0
+    var events: [String: (String) -> ()] = [:]
     var timeRemainingDisplay: String {
         get {
             return formatTimeString(for: secondsRemaining)
@@ -55,6 +56,13 @@ class TrackerController: NSObject {
     }
     var isStop: Bool {
         return workTimer == nil && restTimer == nil
+    }
+    func on(event: String, cb: @escaping (String) -> ()) {
+        events[event] = cb
+    }
+    func emit(event: String) {
+        let cb = events[event]
+        cb!(event)
     }
     // 开始番茄钟
     func startWork() {
