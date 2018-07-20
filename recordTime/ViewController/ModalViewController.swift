@@ -28,7 +28,7 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
     override func awakeFromNib() {
         print("awake")
         trackerModel.subscribe(onTimeUpdate: callback)
-        trackerModel.on(event: "sleep", cb: closeWindow)
+//        trackerModel.on(event: "sleep", cb: handleSleep)
         trackerModel.on(event: "break", cb: closeWindow)
 //        trackerModel.on(event: "stopWork", cb: closeWindow)
         // 如果 webhook 不存在，就不显示输入框
@@ -36,13 +36,18 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
 //        if webhook != nil && webhook != "" {
 //        }
     }
+    func handleSleep(_ content: String) {
+        if trackerModel.isWorking {
+            sendRecord(content)
+        }
+    }
     func windowDidBecomeMain(_ notification: Notification) {
         print("window did load")
 //        trackerModel.subscribe(onTimeUpdate: callback)
     }
     private func callback(seconds: TimeInterval) {
-        print("rest tick", seconds, trackerModel.isResting)
         if trackerModel.isResting {
+            print("rest tick", seconds, trackerModel.isResting)
             time.stringValue = trackerModel.timeRemainingDisplay
         }
     }

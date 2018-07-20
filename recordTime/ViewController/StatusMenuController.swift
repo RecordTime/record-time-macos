@@ -15,7 +15,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     var frontmostApplication: NSRunningApplication?
     let restIcon = NSImage(named: NSImage.Name(rawValue: "rest"))
     let workIcon = NSImage(named: NSImage.Name(rawValue: "work"))
-    var blockSetting = true
+    
     let defaults = UserDefaults.standard
     // 提供数据源
     @IBOutlet weak var trackerModel: TrackerController!
@@ -24,6 +24,9 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     @IBOutlet weak var countdownBar: NSProgressIndicator!
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var startMenuItem: NSMenuItem!
+    // MARK: 屏蔽应用
+    var blockSetting = true
+    @IBOutlet weak var blockedSettingsWindow: NSWindow!
     @IBOutlet weak var cancelBlockMenuItem: NSMenuItem!
     @IBAction func cancelBlock(_ sender: Any) {
         if blockSetting == true {
@@ -34,17 +37,15 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             cancelBlockMenuItem.title = "解除屏蔽"
         }
     }
-    @IBAction func exitRest(_ sender: Any) {
-    }
     @IBAction func openBlockList(_ sender: Any) {
         let settingsWindowController = NSWindowController.init(window: blockedSettingsWindow)
         settingsWindowController.showWindow(sender)
-        // bring settings window to front
         NSApp.activate(ignoringOtherApps: true)
     }
+    // MARK: 设置窗口
     @IBOutlet weak var settingsWindow: NSWindow!
     @IBOutlet weak var recorderWindow: NSWindow!
-    @IBOutlet weak var blockedSettingsWindow: NSWindow!
+    // MARK: 填写记录窗口
     @IBOutlet weak var modalView: NSPanel!
     
     override func viewDidLoad() {
@@ -111,16 +112,9 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
                 stopWork()
                 startRest()
             }
-//            if seconds < 0 {
-//                hideCountdown()
-//            }
             if seconds == 10 {
                 sendRestMessage()
-//                showCountdown()
             }
-//            if seconds < 10 {
-//                updateCountdown(current: (10 - seconds) / 10 * 100)
-//            }
         } else {
             if seconds <= 0 {
                 stopRest()
@@ -132,6 +126,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         }
         updateMenuTitle(title: trackerModel.timeRemainingDisplay)
     }
+    let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Gill Sans", size: 14.0)!]
     // 更新 StatusItem 上的时间
     private func updateMenuTitle(title: String) {
         let keys = SettingsKeys()
@@ -142,7 +137,6 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             }
             return
         }
-        let fontAttr = [ NSAttributedStringKey.font: NSFont(name: "Gill Sans", size: 14.0)!]
         let font = NSAttributedString(string: title, attributes: fontAttr)
         statusItem.attributedTitle = font
     }
@@ -178,12 +172,12 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
         restIcon?.isTemplate = true
         statusItem.button?.image = restIcon
         showModal()
-        // openUrl()
     }
     // 结束休息
     func stopRest() {
         trackerModel.stopRest()
         statusItem.title = nil
+        statusItem.button?.image = workIcon
     }
     // 打开指定网页
     func openUrl() {
@@ -226,22 +220,9 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
     func updateCountdown(current: Double) {
         countdownBar.doubleValue = current
 //        countdownBar.increment(by: current)
-        
-        
     }
     func hideCountdown() {
         countdownView.close()
-    }
-    func toString(dateFormat:String, time: Date) -> String {
-        
-        let dateFormatter:DateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = dateFormat
-        
-        let formattedDatetimeStr:String = dateFormatter.string(from: time)
-        
-        return formattedDatetimeStr
-        
     }
     /**
      * 开始计时与结束计时
@@ -251,13 +232,11 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             stopWork()
             trackerModel.emit(event: "break")
             updateMenu()
-//            statusItem.title = nil
             return
         }
         if trackerModel.isResting {
             stopRest()
             updateMenu()
-//            statusItem.title = nil
             return
         }
         if trackerModel.isStop {

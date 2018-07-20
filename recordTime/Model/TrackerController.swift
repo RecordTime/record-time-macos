@@ -28,7 +28,6 @@ class TrackerController: NSObject {
     var restTimer: Timer? = nil
     var restDuration: TimeInterval = 300
 //    var restDuration: TimeInterval = 6
-    
     // 过去的秒数
     var elapsedTime: TimeInterval = 0
     // 剩余的秒数
@@ -62,20 +61,17 @@ class TrackerController: NSObject {
     }
     // 开始番茄钟
     func startWork() {
-        // todo: 如果正在跑一个，就不能开始
         stopRest()
         let now = Date()
         startTime = now
         workTimer?.invalidate()
         workTimer = Timer(fire: now, interval: 1, repeats: true, block: onTick)
-        // 靠这个走计时器，
         RunLoop.main.add(workTimer!, forMode: RunLoopMode.commonModes)
         onTick(timer: workTimer!)
         statusChanged?()
     }
     private func onTick(timer: Timer) {
         guard let startTime = startTime else { return }
-        
         elapsedTime = -startTime.timeIntervalSinceNow
         secondsRemaining = (duration - elapsedTime).rounded()
         for listener in self.listeners {
