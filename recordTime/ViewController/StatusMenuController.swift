@@ -77,7 +77,7 @@ class StatusMenuController: NSViewController, NSUserNotificationCenterDelegate, 
             if trackerModel.isResting {
                 stopRest()
             }
-            trackerModel.emit(event: "sleep")
+//            trackerModel.emit(event: "sleep")
         }
         if (notification.name == NSWorkspace.screensDidWakeNotification) {
             print("wakeup")
