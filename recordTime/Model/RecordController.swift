@@ -21,12 +21,12 @@ struct Record {
 }
 
 class RecordController: NSObject {
-    var all: [Record] = []
+    var records: [Record] = []
     
     func save(item: Record) {
-        all.append(item)
+        records.append(item)
     }
     func show() -> [Record] {
-        return all
+        return records
     }
 }

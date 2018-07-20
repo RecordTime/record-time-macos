@@ -30,6 +30,7 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
         trackerModel.subscribe(onTimeUpdate: callback)
         trackerModel.on(event: "sleep", cb: closeWindow)
         trackerModel.on(event: "break", cb: closeWindow)
+//        trackerModel.on(event: "stopWork", cb: closeWindow)
         // 如果 webhook 不存在，就不显示输入框
 //        let webhook = defaults.string(forKey: "webhook")!
 //        if webhook != nil && webhook != "" {
@@ -43,9 +44,12 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
         print("rest tick", seconds, trackerModel.isResting)
         if trackerModel.isResting {
             time.stringValue = trackerModel.timeRemainingDisplay
-            if seconds == 0 {
-                closeWindow("auto close")
-            }
+        }
+    }
+    func windowWillExitFullScreen(_ notification: Notification) {
+        // 在关闭窗口时，只有倒计时为 0 表示是自动退出的，填写内容或者点击退出，都不应该是 auto close
+        if trackerModel.secondsRemaining == 0 {
+            closeWindow("auto close")
         }
     }
     func sendRecord(_ content: String) {
@@ -84,10 +88,9 @@ class ModalViewController: NSWindowController, NSWindowDelegate {
     }
     func closeWindow(_ content: String) {
         let webhook = defaults.string(forKey: "webhook")!
-        if webhook != nil && webhook != "" {
+        if webhook != "" {
             sendRecord(content)
         }
-//        sendRecord(content)
         self.view.window?.close()
     }
     @IBAction func saveRecord(_ sender: Any) {

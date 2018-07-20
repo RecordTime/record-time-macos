@@ -44,10 +44,6 @@ class TrackerController: NSObject {
     var listeners: [(TimeInterval) -> ()] = []
     var statusChanged: (() -> ())? = nil
     
-    @IBOutlet weak var modalWindow: NSWindow!
-    @IBAction func stopModal(_ sender: Any) {
-        NSApplication.shared.stopModal()
-    }
     var isWorking: Bool {
         return workTimer != nil
     }
@@ -99,7 +95,6 @@ class TrackerController: NSObject {
      */
     func startRest() {
         stopWork()
-//        NSApplication.shared.runModal(for: self.modalWindow)
         let now = Date()
         startRestTime = now
         restTimer?.invalidate()
@@ -114,7 +109,6 @@ class TrackerController: NSObject {
         
         elapsedTime = -startTime.timeIntervalSinceNow
         secondsRemaining = (restDuration - elapsedTime).rounded()
-//        self.onTimeUpdate?(secondsRemaining)
         for listener in self.listeners {
             listener(secondsRemaining)
         }
